@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party
+    'phonenumber_field',
+
     # vaccuna apps
     'registrant',
     'lgu'

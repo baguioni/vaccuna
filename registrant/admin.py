@@ -1,3 +1,7 @@
 from django.contrib import admin
+from registrant.models import Individual
 
-# Register your models here.
+
+@admin.register(Individual)
+class RegistrantAdmin(admin.ModelAdmin):
+    pass
