@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Vaccuna</title>
+    </head>
+    <body>
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                    <button type="submit">Login</button>
+            </form>
+        New User? Sign up as <a href="/register-individual" target="blank"><strong>Individual</strong></a> or <a href="/register-household" target="blank"><strong>Household</strong></a>
+    </div>
+    </body>
+</html>
