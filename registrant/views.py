@@ -1,8 +1,10 @@
-from django.shortcuts import render
-from registrant.forms import IndividualRegistrantForm, AddressFieldForm, IndividualFormset
-from core.forms import UserSignupForm
 from django.http import HttpResponseRedirect
-from registrant.models import Registrant, Individual
+from django.shortcuts import render
+
+from core.forms import UserSignupForm
+from registrant.forms import (AddressFieldForm, IndividualFormset,
+                              IndividualRegistrantForm)
+from registrant.models import Individual, Registrant
 
 
 def RegistrantHome(request, *args, **kwargs):

@@ -1,8 +1,9 @@
 from django import forms
-from django.forms import ModelForm, SelectDateWidget
-from registrant.models import Individual
+from django.forms import ModelForm, SelectDateWidget, modelformset_factory
+
 from core.models import AddressField, User
-from django.forms import modelformset_factory
+from registrant.models import Individual
+
 
 class AddressFieldForm(ModelForm):
     class Meta:

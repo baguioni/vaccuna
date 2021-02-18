@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 
-from registrant.views import RegistrantHome, IndividualRegisterView, HouseholdRegisterView
 from core.views import LoginView, LogoutRequest
+from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
+                              RegistrantHome)
 
 urlpatterns = [
     path("", LoginView, name="login"),

@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from core.models import AddressField, User
+
 
 @admin.register(AddressField)
 class AddressFieldAdmin(admin.ModelAdmin):

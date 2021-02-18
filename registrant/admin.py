@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from registrant.models import Individual, Registrant
 
 
