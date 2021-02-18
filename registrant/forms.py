@@ -1,13 +1,13 @@
 from django import forms
 from django.forms import ModelForm, SelectDateWidget
 from registrant.models import Individual
-from core.models import AddressField
-
+from core.models import AddressField, User
+from django.forms import modelformset_factory
 
 class AddressFieldForm(ModelForm):
     class Meta:
-      model = AddressField
-      fields = '__all__'
+        model = AddressField
+        fields = '__all__'
 
     line1 = forms.CharField(initial='Street Address 1')
     line2 = forms.CharField(initial='Street Address 2')
@@ -32,9 +32,14 @@ class AddressFieldForm(ModelForm):
 class IndividualRegistrantForm(ModelForm):
     class Meta:
         model = Individual
-        exclude = ('address',)
+        exclude = ('registrant',)
 
         widgets = {
             'birthday' : SelectDateWidget(),
         }
 
+
+IndividualFormset = modelformset_factory(
+    Individual,
+    form=IndividualRegistrantForm
+)

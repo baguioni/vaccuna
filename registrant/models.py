@@ -8,6 +8,7 @@ class Registrant(models.Model):
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
     is_household = models.BooleanField(default=False)
 
+
 class Individual(models.Model):
     YES = 'YES'
     NO = 'NO'

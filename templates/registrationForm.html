@@ -5,10 +5,13 @@
 </head>
 <!-- https://www.darwinbiler.com/jquery-ph-locations/ -->
 <body>
+    <h1>Vaccuna Individual Registration</h1>
     <form method="POST">
         {% csrf_token %}
+        {{ user_form.as_p }}
         {{ address_form.as_p }}
-        {{ individual_form.as_p }}
+        {% block content %}
+        {% endblock %}
         <input type="submit" value="Save"/>
     </form>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
