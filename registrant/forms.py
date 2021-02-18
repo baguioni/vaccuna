@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm, SelectDateWidget
 from registrant.models import Individual
-from registrant.models import AddressField
+from core.models import AddressField
+
 
 class AddressFieldForm(ModelForm):
     class Meta:
@@ -36,3 +37,4 @@ class IndividualRegistrantForm(ModelForm):
         widgets = {
             'birthday' : SelectDateWidget(),
         }
+

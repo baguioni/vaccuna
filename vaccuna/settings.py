@@ -45,9 +45,12 @@ INSTALLED_APPS = [
 
     # vaccuna apps
     'registrant',
-    'lgu'
+    'lgu',
+    'core',
 
 ]
+
+AUTH_USER_MODEL = "core.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

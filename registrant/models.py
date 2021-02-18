@@ -1,23 +1,12 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from core.models import AddressField, User
 
 
-class AddressField(models.Model):
-    line1 = models.CharField('Street Address 1', max_length=50)
-    line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='')
-    region = models.CharField(max_length=50)
-    province = models.CharField(max_length=50)
-    city = models.CharField('City / Municipality', max_length=50)
-    barangay = models.CharField(max_length=50)
-    # TO DO
-    # GOOGLE GEOLOC
-    def get_formatted_address(self, sep='\n'):
-        parts = [', '.join(filter(bool, [self.line1, self.line2]))]
-        parts.append(' '.join((self.barangay, self.city, self.province, self.region)))
-        return sep.join((x.strip() for x in parts if x))
-
-    def get_inline_address(self):
-        return self.get_formatted_address(', ')
+class Registrant(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
+    is_household = models.BooleanField(default=False)
 
 class Individual(models.Model):
     YES = 'YES'
@@ -35,7 +24,7 @@ class Individual(models.Model):
     last_name = models.CharField(max_length=50)
     birthday = models.DateTimeField()
     mobile_number = PhoneNumberField()
-    address = models.ForeignKey('AddressField', on_delete=models.CASCADE)
+    registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE)
 
     # Checklist
     had_covid = models.CharField(
