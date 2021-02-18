@@ -8,7 +8,7 @@ from registrant.models import Individual
 class AddressFieldForm(ModelForm):
     class Meta:
         model = AddressField
-        fields = '__all__'
+        exclude = ('longitude', 'latitude',)
 
     line1 = forms.CharField(initial='Street Address 1')
     line2 = forms.CharField(initial='Street Address 2')

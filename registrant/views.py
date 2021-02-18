@@ -5,6 +5,8 @@ from core.forms import UserSignupForm
 from registrant.forms import (AddressFieldForm, IndividualFormset,
                               IndividualRegistrantForm)
 from registrant.models import Individual, Registrant
+import googlemaps
+from django.conf import settings
 
 
 def RegistrantHome(request, *args, **kwargs):
@@ -23,7 +25,18 @@ def HouseholdRegisterView(request):
         formset = IndividualFormset(request.POST)
 
         if formset.is_valid() and address_form.is_valid() and user_form.is_valid():
+            # Determine latitude longitude of address
+            gmaps = googlemaps.Client(key=settings.GOOGLE_MAPS_API_KEY)
             address = address_form.save()
+            geocode_result = gmaps.geocode(address.get_formatted_address())
+            coordinates = geocode_result
+
+            if coordinates:
+                coordinates = coordinates[0]['geometry']['location']
+                address.latitude = coordinates['lat']
+                address.longitude = coordinates['lng']
+            address.save()
+
             user = user_form.save(commit=False)
             user.is_registrant = True
             user.save()
@@ -59,9 +72,19 @@ def IndividualRegisterView(request):
 
     if request.method == 'POST':
 
-        if individual_form.is_valid() and address_form.is_valid() and user_form.is_valid():
-            # Save user and address
+        if address_form.is_valid() and user_form.is_valid():
+            # Determine latitude longitude of address
+            gmaps = googlemaps.Client(key=settings.GOOGLE_MAPS_API_KEY)
             address = address_form.save()
+            geocode_result = gmaps.geocode(address.get_formatted_address())
+            coordinates = geocode_result
+
+            if coordinates:
+                coordinates = coordinates[0]['geometry']['location']
+                address.latitude = coordinates['lat']
+                address.longitude = coordinates['lng']
+            address.save()
+
             user = user_form.save(commit=False)
             user.is_registrant = True
             user.save()
