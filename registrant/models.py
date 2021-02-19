@@ -1,6 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
+from datetime import date
 from core.models import AddressField, User
 
 
@@ -24,7 +24,7 @@ class Individual(models.Model):
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    birthday = models.DateTimeField()
+    birthday = models.DateField()
     mobile_number = PhoneNumberField()
     registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE)
 
@@ -41,6 +41,10 @@ class Individual(models.Model):
         default=NOT_SURE,
     )
 
+    #
+    is_employed = models.BooleanField()
+    is_uniformed_personnel = models.BooleanField()
+    is_healthcare_worker = models.BooleanField()
     # Symptoms
 
     # Sickness
@@ -55,12 +59,14 @@ class Individual(models.Model):
     leukemia = models.BooleanField()
     organ_transplant = models.BooleanField()
     pregnant = models.BooleanField()
-    currently_employed = models.BooleanField()
+
 
     def get_full_name(self):
         full_name = f'{self.first_name} {self.middle_name} {self.last_name}'
         return full_name.strip()
 
 
-
-
+    def get_age(self):
+        today = date.today()
+        birthday = self.birthday
+        return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))

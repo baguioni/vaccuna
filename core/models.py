@@ -8,12 +8,12 @@ class User(AbstractUser):
 
 
 class AddressField(models.Model):
-    line1 = models.CharField('Street Address 1', max_length=50)
-    line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='')
     region = models.CharField(max_length=50)
     province = models.CharField(max_length=50)
     city = models.CharField('City / Municipality', max_length=50)
     barangay = models.CharField(max_length=50)
+    line1 = models.CharField('Street Address 1', max_length=50)
+    line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='', null=True)
     # TO DO
     # GOOGLE GEOLOC
     def get_formatted_address(self, sep='\n'):
