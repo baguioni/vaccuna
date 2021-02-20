@@ -11,5 +11,4 @@ urlpatterns = [
     path('register-household', HouseholdRegisterView),
     path('register-individual/', IndividualRegisterView),
     path('admin/', admin.site.urls),
-
 ]
