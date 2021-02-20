@@ -29,7 +29,7 @@ class AddressField(models.Model):
         return ' '.join((x.strip() for x in parts if x))
 
     def get_inline_address(self):
-        return self.get_full_address(', ')
+        return self.get_full_address()
 
     def get_coordinates(self):
         return (self.latitude, self.longitude)

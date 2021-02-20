@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Registrant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
+    address = models.OneToOneField(AddressField, on_delete=models.CASCADE, null=True)
     is_household = models.BooleanField(default=False)
     lgu = models.ForeignKey(LocalGovernmentUnit, related_name='registrants', on_delete=models.CASCADE, null=True)
 
