@@ -1,9 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Vaccuna</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                background-color: #fafcff;
+            }
+        </style>
     </head>
     <body>
+        <img class="img-banner" src="{% static 'img/banner.png' %}" alt="vaccuna banner">
+        <div class="wrapper">
+            <article class="img-info">
+                <p style="text-align:center; padding-top: 20%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
+                    <span style="color: #e89442"> 565,543</span> Filipinos Vaccinated
+                </p>
+            </article>
+        </div>
         <div class="container">
             <form method="POST">
                 {% csrf_token %}
@@ -12,5 +32,23 @@
             </form>
         New User? Sign up as <a href="/register-individual" target="blank"><strong>Individual</strong></a> or <a href="/register-household" target="blank"><strong>Household</strong></a>
     </div>
+    <div class="form-box">
+            <div class="input-box">
+                <input type="email" placeholder="Email or Vaccuna ID.">
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Password">
+                <span class="eye">
+                    <i id="hide1" class="fa fa-eye"></i>
+                    <i id="hide2" class="fa fa-eye-slash"></i>
+                </span>
+            </div>
+            <div class="forget-pass">
+                <p style="text-align:right; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b; font-size: 13px; margin-right: 50px">
+                    Forgot Password?
+                </p>
+            </div>
+            <button type="button" class="login-btn" style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
+        </div>
     </body>
 </html>
