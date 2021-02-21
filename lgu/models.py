@@ -8,8 +8,10 @@ class LocalGovernmentUnit(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
+
     def filename(self):
         return os.path.basename(self.registrant_map.name)
+
 
 class VaccinationSite(models.Model):
     name = models.CharField(max_length=50)

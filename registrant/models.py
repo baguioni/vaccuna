@@ -15,7 +15,6 @@ class Registrant(models.Model):
 
 class Individual(models.Model):
 
-    class PriorityGroup
     class ChecklistChoice(models.TextChoices):
         YES = 'YES', _('Yes')
         NO = 'NO', _('No')
@@ -60,12 +59,12 @@ class Individual(models.Model):
     second_vaccination_datetime = models.DateTimeField(null=True)
 
     # Employment status
-    is_frontline_worker
-    is_frontline_personnel
+    is_frontline_worker = models.BooleanField(default=False)
+    is_frontline_personnel = models.BooleanField(default=False)
     is_uniformed_personnel = models.BooleanField(default=False)
-    is_teacher_or_social_worker
-    is_government_worker
-    is_overseas_filipino_worker
+    is_teacher_or_social_worker = models.BooleanField(default=False)
+    is_government_worker = models.BooleanField(default=False)
+    is_overseas_filipino_worker = models.BooleanField(default=False)
     is_employed = models.BooleanField(default=False)
 
     # co-morbidities
@@ -87,7 +86,8 @@ class Individual(models.Model):
     cerebrovascular_disease = models.BooleanField(default=False)
     seizure_disorder = models.BooleanField(default=False)
     blood_disease = models.BooleanField(default=False)
-    priority_group = models.IntegerField(choices=PriorityGroup, default=PriorityGroup.C)
+    priority_group = models.IntegerField(choices=PriorityGroup.choices(), default=PriorityGroup.C)
+
 
     def get_full_name(self):
         full_name = f'{self.first_name} {self.middle_name} {self.last_name}'

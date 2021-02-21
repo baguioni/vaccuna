@@ -23,6 +23,11 @@ class PriorityGroup(IntEnum):
     C = 12
 
 
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
+
+
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_registrant = models.BooleanField(default=False)
@@ -37,6 +42,7 @@ class AddressField(models.Model):
     line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='', null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+
 
     def get_formatted_address(self):
         parts = [', '.join(filter(bool, [self.line1, self.line2]))]
