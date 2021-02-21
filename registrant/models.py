@@ -1,7 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
-from core.models import AddressField, User
+from core.models import AddressField, User, PriorityGroup
 from lgu.models import LocalGovernmentUnit
 from django.utils.translation import gettext_lazy as _
 
@@ -15,6 +15,7 @@ class Registrant(models.Model):
 
 class Individual(models.Model):
 
+    class PriorityGroup
     class ChecklistChoice(models.TextChoices):
         YES = 'YES', _('Yes')
         NO = 'NO', _('No')
@@ -52,28 +53,41 @@ class Individual(models.Model):
         choices=Status.choices,
         default=Status.PENDING,
     )
+
     vaccination_status = models.IntegerField(default=0)
     vaccination_site = models.ForeignKey(AddressField, on_delete=models.CASCADE, null=True)
     first_vaccination_datetime = models.DateTimeField(null=True)
     second_vaccination_datetime = models.DateTimeField(null=True)
 
     # Employment status
-    is_employed = models.BooleanField(default=False)
+    is_frontline_worker
+    is_frontline_personnel
     is_uniformed_personnel = models.BooleanField(default=False)
-    is_healthcare_worker = models.BooleanField(default=False)
+    is_teacher_or_social_worker
+    is_government_worker
+    is_overseas_filipino_worker
+    is_employed = models.BooleanField(default=False)
 
-    # Medical History
-    respiratory_illness = models.BooleanField(default=False)
-    cardiovascular_illness = models.BooleanField(default=False)
-    asthma = models.BooleanField(default=False)
-    kidney_stones = models.BooleanField(default=False)
-    diabetes = models.BooleanField(default=False)
-    high_blood_pressure = models.BooleanField(default=False)
-    blood_disease = models.BooleanField(default=False)
+    # co-morbidities
+    # https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html    cancer = models.BooleanField(default=False)
+    # https://www.uppi.upd.edu.ph/sites/default/files/pdf/COVID-19-Research-Brief-01.pdf
+    # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7306563/
     cancer = models.BooleanField(default=False)
-    leukemia = models.BooleanField(default=False)
-    organ_transplant = models.BooleanField(default=False)
+    chronic_kidney_disease = models.BooleanField(default=False)
     pregnant = models.BooleanField(default=False)
+    diabetes = models.BooleanField(default=False)
+    respiratory_illness = models.BooleanField(default=False)
+    cardiovascular_disease = models.BooleanField(default=False)
+    asthma = models.BooleanField(default=False)
+    high_blood_pressure = models.BooleanField(default=False)
+    organ_transplant = models.BooleanField(default=False)
+    kidney_disease = models.BooleanField(default=False)
+    sickle_cell_disease = models.BooleanField(default=False)
+    down_syndrome = models.BooleanField(default=False)
+    cerebrovascular_disease = models.BooleanField(default=False)
+    seizure_disorder = models.BooleanField(default=False)
+    blood_disease = models.BooleanField(default=False)
+    priority_group = models.IntegerField(choices=PriorityGroup, default=PriorityGroup.C)
 
     def get_full_name(self):
         full_name = f'{self.first_name} {self.middle_name} {self.last_name}'
