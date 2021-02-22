@@ -1,11 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
 from core.forms import UserSignupForm
 from registrant.forms import (AddressFieldForm, IndividualFormset,
                               IndividualRegistrantForm)
 from registrant.models import Individual, Registrant
-
+import googlemaps
+from django.conf import settings
+from registrant.tasks import AssignPriorityGroup
+from core.tasks import GetCoordinates
 
 def RegistrantHome(request, *args, **kwargs):
     return render(request, "home.html", {})
@@ -24,6 +26,14 @@ def HouseholdRegisterView(request):
 
         if formset.is_valid() and address_form.is_valid() and user_form.is_valid():
             address = address_form.save()
+            coordinates = GetCoordinates(address)
+
+            if coordinates:
+                coordinates = coordinates[0]['geometry']['location']
+                address.latitude = coordinates['lat']
+                address.longitude = coordinates['lng']
+            address.save()
+
             user = user_form.save(commit=False)
             user.is_registrant = True
             user.save()
@@ -38,6 +48,8 @@ def HouseholdRegisterView(request):
                         individual = individual_form.save(commit=False)
                         individual.registrant = registrant
                         individual.save()
+                        AssignPriorityGroup(individual)
+
                     except:
                         print('database error')
 
@@ -59,9 +71,16 @@ def IndividualRegisterView(request):
 
     if request.method == 'POST':
 
-        if individual_form.is_valid() and address_form.is_valid() and user_form.is_valid():
-            # Save user and address
+        if address_form.is_valid() and user_form.is_valid():
             address = address_form.save()
+            coordinates = GetCoordinates(address)
+
+            if coordinates:
+                coordinates = coordinates[0]['geometry']['location']
+                address.latitude = coordinates['lat']
+                address.longitude = coordinates['lng']
+            address.save()
+
             user = user_form.save(commit=False)
             user.is_registrant = True
             user.save()
@@ -74,6 +93,7 @@ def IndividualRegisterView(request):
             individual = individual_form.save(commit=False)
             individual.registrant = registrant
             individual.save()
+            AssignPriorityGroup(individual)
 
             return HttpResponseRedirect('/success')
         else:

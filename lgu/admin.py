@@ -1,3 +1,7 @@
 from django.contrib import admin
+from lgu.models import LocalGovernmentUnit
 
-# Register your models here.
+
+@admin.register(LocalGovernmentUnit)
+class LocalGovernmentUnitAdmin(admin.ModelAdmin):
+    list_display = ('name', )

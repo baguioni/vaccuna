@@ -8,11 +8,7 @@ from registrant.models import Individual
 class AddressFieldForm(ModelForm):
     class Meta:
         model = AddressField
-        fields = '__all__'
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'input'}),
-            'email': forms.EmailInput(attrs={'class': 'input'}),
-        }
+        exclude = ('longitude', 'latitude',)
 
     line1 = forms.CharField(initial='Street Address 1')
     line2 = forms.CharField(initial='Street Address 2')
@@ -40,7 +36,15 @@ class AddressFieldForm(ModelForm):
 class IndividualRegistrantForm(ModelForm):
     class Meta:
         model = Individual
-        exclude = ('registrant',)
+        exclude = (
+          'registrant',
+          'registration_status',
+          'vaccination_status',
+          'first_vaccination_datetime',
+          'second_vaccination_datetime',
+          'vaccination_site',
+          'priority_group'
+          )
 
         widgets = {
             'birthday' : SelectDateWidget(),

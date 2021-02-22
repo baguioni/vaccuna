@@ -1,7 +1,7 @@
 {% extends "registrationForm.html" %}
 {% block content %}
-    <h3>Indivuals</h3>
     {{ formset.management_form }}
+
     <div id="form_set">
         {% for form in formset.forms %}
             {{form.non_field_errors}}
@@ -18,12 +18,3 @@
         </table>
     </div>
 {% endblock %}
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
-<script type="text/javascript">
-$('#add_more').click(function() {
-    var form_idx = $('#id_form-TOTAL_FORMS').val();
-    $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
-    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
-});
-</script>
