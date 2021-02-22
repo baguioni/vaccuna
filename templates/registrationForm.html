@@ -1,11 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
 <head>
-    <title>Vaccuna</title>
+    <title>Vaccuna | Register</title>
 </head>
 <!-- https://www.darwinbiler.com/jquery-ph-locations/ -->
 <body>
-    <h1>Vaccuna Individual Registration</h1>
+    <h1 style="text-align: left; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 70px; color: #e89442">Sign Up</h1>
     <form method="POST">
         {% csrf_token %}
         {{ user_form.as_p }}
