@@ -19,3 +19,5 @@ def generate_registrant_markers_map(lgu):
     # import ipdb; ipdb.set_trace()
     html = ContentFile(gmap.get())
     lgu.registrant_map.save('Cebu City Map.html', html)
+
+

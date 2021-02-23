@@ -2,6 +2,7 @@ from django.db import models
 from core.models import AddressField
 import os
 
+
 class LocalGovernmentUnit(models.Model):
     name = models.CharField(max_length=50)
     registrant_map = models.FileField(upload_to='static/maps/', null=True, blank=True)
@@ -15,5 +16,11 @@ class LocalGovernmentUnit(models.Model):
 
 class VaccinationSite(models.Model):
     name = models.CharField(max_length=50)
+    address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
+    lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE)
+    daily_capacity = models.IntegerField()
+
+
+class PriorityLocation(models.Model):
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
     lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE)
