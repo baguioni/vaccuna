@@ -2,32 +2,25 @@ from django import forms
 from django.forms import ModelForm, SelectDateWidget, modelformset_factory
 
 from core.models import AddressField, User
-from registrant.models import Individual
+from registrant.models import Individual, Registrant
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class AddressFieldForm(ModelForm):
     class Meta:
         model = AddressField
-        exclude = ('longitude', 'latitude',)
+        exclude = ('longitude', 'latitude')
 
-    line1 = forms.CharField(initial='Street Address 1')
-    line2 = forms.CharField(initial='Street Address 2')
-    region = forms.CharField(label=('Region'),
-                  widget=forms.Select(attrs={'id': 'region'}),
-                  required=False,
-                )
-    province = forms.CharField(label=('Province'),
-                  widget=forms.Select(attrs={'id': 'province'}),
-                  required=False,
-                )
-    city = forms.CharField(label=('City/Municipality'),
-                  widget=forms.Select(attrs={'id': 'city'}),
-                  required=False,
-                )
-    barangay = forms.CharField(label=('Barangay'),
-                  widget=forms.Select(attrs={'id': 'barangay'}),
-                  required=False,
-                )
+        widgets = {
+            'line1': forms.TextInput(attrs={"class": "form-control form-control-lg"}),
+            'line2': forms.TextInput(attrs={"class": "form-control form-control-lg"}),
+            'region': forms.Select(attrs={'id': 'region', 'class': 'form-control form-control-lg'}),
+            'province': forms.Select(attrs={'id': 'province', 'class': 'form-control form-control-lg'}),
+            'city': forms.Select(attrs={'id': 'city', 'class': 'form-control form-control-lg'}),
+            'barangay': forms.Select(attrs={'id': 'barangay', 'class': 'form-control form-control-lg'})
+        }
+
 
 
 class IndividualRegistrantForm(ModelForm):
@@ -45,7 +38,7 @@ class IndividualRegistrantForm(ModelForm):
           )
 
         widgets = {
-            'birthday' : SelectDateWidget(),
+            'birthday': DateInput(attrs={'class': 'form-control'}),
         }
 
 

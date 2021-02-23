@@ -9,8 +9,17 @@ from django.conf import settings
 from registrant.tasks import AssignPriorityGroup
 from core.tasks import GetCoordinates
 
-def RegistrantHome(request, *args, **kwargs):
-    return render(request, "home.html", {})
+from django.shortcuts import render
+
+
+def RegistrantDashboard(request, id):
+    registrant = Registrant.objects.get(pk=id)
+    individuals = registrant.individuals.all()
+    context = {
+        'registrant': registrant,
+        'individuals': individuals
+    }
+    return render(request, "home.html", context)
 
 def HouseholdRegisterView(request):
     if request.method == "GET":
@@ -53,7 +62,7 @@ def HouseholdRegisterView(request):
                     except:
                         print('database error')
 
-            return HttpResponseRedirect('/success')
+            return HttpResponseRedirect(f'/registrant/{registrant.pk}')
 
     context = {
         'user_form': user_form,
@@ -95,7 +104,7 @@ def IndividualRegisterView(request):
             individual.save()
             AssignPriorityGroup(individual)
 
-            return HttpResponseRedirect('/success')
+            return HttpResponseRedirect(f'/registrant/{registrant.pk}')
         else:
             context = {
                 'individual_form': individual_form,
@@ -112,3 +121,4 @@ def IndividualRegisterView(request):
     return render(
         request, 'individualForm.html', context
     )
+
