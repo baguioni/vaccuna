@@ -21,11 +21,29 @@ def GenerateLat():
 def GenerateLong():
     return round(choice(CENTER_LONG)+choice([-1, 1])*uniform(0, 0.020000), 6)
 
+
+class UserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    username = factory.Faker("credit_card_number")
+    is_registrant = True
+
 def GenerateCebuCity():
+    user = UserFactory(
+        is_registrant=False,
+        is_admin=True,
+        first_name='Cebu',
+        last_name='City',
+    )
+
     cebu_city = LocalGovernmentUnit.objects.create(
         name="Cebu City",
         latitude=10.2929,
-        longitude=123.9017
+        longitude=123.9017,
+        user=user
     )
 
     vaccinations_sites = (
@@ -52,18 +70,17 @@ def GenerateCebuCity():
     priority_locations = (
         'Guadalupe',
         'Basak San Nicolas',
-        'Lahug (Pob.)'
-        'Mambaling'
+        'Lahug (Pob.)',
+        'Mambaling',
     )
 
     for pl in priority_locations:
         PriorityLocation.objects.create(
-            name=pl,
             address=AddressField.objects.create(
                 barangay=pl,
                 city='Cebu City',
                 province='Cebu',
-            )
+            ),
             lgu=cebu_city
         )
 
@@ -76,16 +93,6 @@ class AddressFactory(DjangoModelFactory):
 
     latitude = factory.LazyFunction(GenerateLat)
     longitude = factory.LazyFunction(GenerateLong)
-
-
-class UserFactory(DjangoModelFactory):
-    class Meta:
-        model = User
-
-    first_name = factory.Faker("first_name")
-    last_name = factory.Faker("last_name")
-    username = factory.Faker("credit_card_number")
-    is_registrant = True
 
 
 class RegistrantFactory(DjangoModelFactory):
