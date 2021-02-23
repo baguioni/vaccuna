@@ -17,10 +17,11 @@ class LocalGovernmentUnit(models.Model):
 class VaccinationSite(models.Model):
     name = models.CharField(max_length=50)
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
-    lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE)
+    lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE, related_name='vaccination_sites')
     daily_capacity = models.IntegerField()
 
 
 class PriorityLocation(models.Model):
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
-    lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE)
+    lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE, related_name='priority_locations')
+    rank = models.IntegerField(null=True)

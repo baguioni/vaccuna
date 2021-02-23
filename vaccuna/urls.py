@@ -10,7 +10,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', LoginView, name="login"),
-    path('dashboard/<int:lgu_id>', DashboardView, name='dashboard'),
+    path('lgu-dashboard/<int:lgu_id>', DashboardView, name='dashboard'),
     path('logout', LogoutRequest, name="logout"),
     path('register-household', HouseholdRegisterView),
     path('register-individual/', IndividualRegisterView),
