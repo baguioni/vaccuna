@@ -40,7 +40,8 @@ class IndividualRegistrantForm(ModelForm):
           'first_vaccination_datetime',
           'second_vaccination_datetime',
           'vaccination_site',
-          'priority_group'
+          'priority_group',
+          'lgu',
           )
 
         widgets = {

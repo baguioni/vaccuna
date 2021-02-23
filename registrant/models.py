@@ -4,7 +4,7 @@ from datetime import date
 from core.models import AddressField, User, PriorityGroup
 from lgu.models import LocalGovernmentUnit
 from django.utils.translation import gettext_lazy as _
-
+from lgu.models import VaccinationSite
 
 class Registrant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -55,7 +55,7 @@ class Individual(models.Model):
     )
 
     vaccination_status = models.IntegerField(default=0)
-    vaccination_site = models.ForeignKey(AddressField, on_delete=models.CASCADE, null=True)
+    vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.CASCADE, null=True, related_name='individuals')
     first_vaccination_datetime = models.DateTimeField(null=True)
     second_vaccination_datetime = models.DateTimeField(null=True)
 
