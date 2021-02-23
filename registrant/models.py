@@ -28,11 +28,12 @@ class Individual(models.Model):
 
     # Basic Info
     first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
     birthday = models.DateField()
     mobile_number = PhoneNumberField()
-    registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE)
+    registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE, related_name='individuals')
+    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.CASCADE, null=True)
 
     # Living Situation
     had_covid = models.CharField(
