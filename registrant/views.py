@@ -9,6 +9,9 @@ from django.conf import settings
 from registrant.tasks import AssignPriorityGroup
 from core.tasks import GetCoordinates
 
+from django.shortcuts import render
+
+
 def RegistrantHome(request, *args, **kwargs):
     return render(request, "home.html", {})
 
@@ -112,3 +115,4 @@ def IndividualRegisterView(request):
     return render(
         request, 'individualForm.html', context
     )
+
