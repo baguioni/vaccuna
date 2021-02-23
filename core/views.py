@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def LoginView(request):
@@ -14,7 +14,8 @@ def LoginView(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
-                return redirect('/')
+
+                return redirect(f'/registrant/{user.registrant.pk}')
             else:
                 messages.error(request, "Invalid username or password.")
         else:

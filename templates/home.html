@@ -5,10 +5,23 @@
 </head>
 
 <body>
-    <img src="https://raw.githubusercontent.com/baguionini/vaccuna/master/Vaccuna%20Logo.png" alt="Vaccuna Logo">
-
+    <h1>Registrant Dashboard</h1>
+    <h3>Address: {{registrant.get_formatted_address}}</h3>
+    <h3>LGU: {{registrant.lgu.name}}</h3>
     <div id="content">
-        {% block content %}{% endblock %}
+        {% csrf_token %}
+        {% for individual in individuals %}
+        <div>
+            <h3>{{individual.get_full_name}}</h3>
+            <p>Age: {{individual.get_age}}</p>
+            <p>Sex: {{individual.sex_assigned_at_birth}}</p>
+            <p>Mobile Number: {{individual.mobile_number}}</p>
+            <p>Registration Status: {{individual.get_registration_status_display}}</p>
+            <p>Vaccination Status: {{individual.vaccination_status}}</p>
+            <p>Vaccination Date: {{individual.first_vaccination_datetime}}</p>
+        </div>
+        <hr>
+        {% endfor %}
     </div>
 </body>
 </html>
