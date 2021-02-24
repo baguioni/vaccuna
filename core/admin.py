@@ -1,6 +1,10 @@
 from django.contrib import admin
-
+from .models import QR
+from .models import sms
 from core.models import AddressField, User
+
+admin.site.register(QR)
+admin.site.register(sms)
 
 
 @admin.register(AddressField)
