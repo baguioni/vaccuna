@@ -54,11 +54,6 @@ def AssignPriorityGroup(individual):
         individual.save()
         return
 
-    if individual.is_government_worker:
-        individual.priority_group = PriorityGroup.B2
-        individual.save()
-        return
-
     if individual.is_overseas_filipino_worker:
         individual.priority_group = PriorityGroup.B5
         individual.save()
