@@ -8,6 +8,8 @@ import googlemaps
 from django.conf import settings
 from registrant.tasks import AssignPriorityGroup
 from core.tasks import GetCoordinates
+import re
+from lgu.models import LocalGovernmentUnit
 
 def RegistrantHome(request, *args, **kwargs):
     return render(request, "home.html", {})
@@ -15,7 +17,7 @@ def RegistrantHome(request, *args, **kwargs):
 def HouseholdRegisterView(request):
     if request.method == "GET":
         user_form = UserSignupForm(request.GET or None)
-        address_form = AddressFieldForm(request.POST or None)
+        address_form = AddressFieldForm(request.GET or None)
         formset = IndividualFormset(queryset=Individual.objects.none())
 
     if request.method == "POST":
@@ -28,6 +30,7 @@ def HouseholdRegisterView(request):
             address = address_form.save()
             coordinates = GetCoordinates(address)
 
+
             if coordinates:
                 coordinates = coordinates[0]['geometry']['location']
                 address.latitude = coordinates['lat']
@@ -38,8 +41,12 @@ def HouseholdRegisterView(request):
             user.is_registrant = True
             user.save()
 
+            lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
+
+            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
+            lgu = lgu if lgu else None
             # Create registrant object
-            registrant = Registrant(user=user, address=address, is_household=True)
+            registrant = Registrant(user=user, address=address, is_household=True, lgu=lgu)
             registrant.save()
 
             for individual_form in formset:
@@ -47,6 +54,7 @@ def HouseholdRegisterView(request):
                     try:
                         individual = individual_form.save(commit=False)
                         individual.registrant = registrant
+                        individual.lgu = lgu
                         individual.save()
                         AssignPriorityGroup(individual)
 
@@ -68,13 +76,11 @@ def IndividualRegisterView(request):
     individual_form = IndividualRegistrantForm(request.POST or None)
     address_form = AddressFieldForm(request.POST or None)
     user_form = UserSignupForm(request.POST or None)
-
     if request.method == 'POST':
 
-        if address_form.is_valid() and user_form.is_valid():
+        if individual_form.is_valid() and address_form.is_valid() and user_form.is_valid():
             address = address_form.save()
             coordinates = GetCoordinates(address)
-
             if coordinates:
                 coordinates = coordinates[0]['geometry']['location']
                 address.latitude = coordinates['lat']
@@ -85,13 +91,18 @@ def IndividualRegisterView(request):
             user.is_registrant = True
             user.save()
 
+            lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
+
+            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
+            lgu = lgu if lgu else None
             # Create registrant object
-            registrant = Registrant(user=user, address=address)
+            registrant = Registrant(user=user, address=address, lgu=lgu)
             registrant.save()
 
             # Save link individual to registrant
             individual = individual_form.save(commit=False)
             individual.registrant = registrant
+            individual.lgu = lgu
             individual.save()
             AssignPriorityGroup(individual)
 

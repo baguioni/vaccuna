@@ -11,7 +11,7 @@ class AddressFieldForm(ModelForm):
         exclude = ('longitude', 'latitude',)
 
     line1 = forms.CharField(initial='Street Address 1')
-    line2 = forms.CharField(initial='Street Address 2')
+    line2 = forms.CharField(initial='Street Address 2', required=False)
     region = forms.CharField(label=('Region'),
                   widget=forms.Select(attrs={'id': 'region'}),
                   required=False,
