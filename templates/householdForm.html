@@ -21,9 +21,7 @@
 </style>
 
     <details open>
-        <summary>Juanita Dela Cruz</summary>
-
-        <div id="test">
+        <summary>Member 1</summary>
             <div id="form_set">
                 {% for form in formset.forms %}
                     {{form.non_field_errors}}
@@ -33,13 +31,14 @@
                     </table>
                 {% endfor %}
             </div>
-        </div>
     </details>
 
-    <input type="button" value="Add More" id="add_more">
+    <input type="button" value="Add Member" id="add_more">
     <div id="empty_form" style="display:none">
         <table class='no_error'>
-            {{ formset.empty_form }}
+            <details open>
+                {{ formset.empty_form }}
+            </details>
         </table>
     </div>
 {% endblock %}
