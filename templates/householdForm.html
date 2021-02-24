@@ -19,26 +19,38 @@
 
 
 </style>
-
-    <details open>
+    {% for form in formset.forms %}
+    {{form.non_field_errors}}
+    {{form.errors}}
+    <div id="form_set">
+    <details open >
         <summary>Member 1</summary>
-            <div id="form_set">
-                {% for form in formset.forms %}
-                    {{form.non_field_errors}}
-                    {{form.errors}}
-                    <table class='no_error'>
-                        {{ form }}
-                    </table>
-                {% endfor %}
-            </div>
-    </details>
 
+
+                <table class='no_error'>
+                    {{ form }}
+                </table>
+
+    </details>
+    </div>
+    {% endfor %}
     <input type="button" value="Add Member" id="add_more">
     <div id="empty_form" style="display:none">
+    <details open >
+    <summary>Member 1</summary>
         <table class='no_error'>
-            <details open>
                 {{ formset.empty_form }}
-            </details>
+
         </table>
-    </div>
+    </details>
+</div>
 {% endblock %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script type="text/javascript">
+$('#add_more').click(function() {
+    var form_idx = $('#id_form-TOTAL_FORMS').val();
+    $('#form_set').append($('#empty_form').remove().html().replace(/__prefix__/g, form_idx));
+    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+});
+</script>
