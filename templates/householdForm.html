@@ -1,16 +1,41 @@
 {% extends "registrationForm.html" %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 {% block content %}
     {{ formset.management_form }}
 
-    <div id="form_set">
-        {% for form in formset.forms %}
-            {{form.non_field_errors}}
-            {{form.errors}}
-            <table class='no_error'>
-                {{ form }}
-            </table>
-        {% endfor %}
-    </div>
+<style>
+    summary {
+        text-indent: 5px;
+        font-size: 20px;
+        width: 100%;
+        border: 1px solid #b8b8b8;
+        border-radius: 5px;
+        outline: none;
+        background: #fff;
+        color: #000;
+    }
+
+
+</style>
+
+    <details open>
+        <summary>Juanita Dela Cruz</summary>
+
+        <div id="test">
+            <div id="form_set">
+                {% for form in formset.forms %}
+                    {{form.non_field_errors}}
+                    {{form.errors}}
+                    <table class='no_error'>
+                        {{ form }}
+                    </table>
+                {% endfor %}
+            </div>
+        </div>
+    </details>
+
     <input type="button" value="Add More" id="add_more">
     <div id="empty_form" style="display:none">
         <table class='no_error'>
