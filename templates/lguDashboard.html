@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Vaccuna</title>
+    </head>
+  <body>
+    <h1>{{obj.name}} Dashboard</h1>
+    <h3>Total Registrants: {{obj.individuals.all.count}}</h3>
+    <h3>Vaccinated (Complete): {{fully_vaccinated}}</h3>
+    <h3>Vaccinated (First Dose): {{first_dose}}</h3>
+    <h2>Vaccination Sites</h2>
+    <div class="vaccination-sites">
+      <table>
+          <tr>
+              <th>Name</th>
+              <th>Daily Capacity</th>
+              <th>Registrants</th>
+          </tr>
+          {% for vs in obj.vaccination_sites.all %}
+          <tr>
+              <td>{{vs.name}}</td>
+              <td>{{vs.daily_capacity}}</td>
+              <td>{{vs.individuals.all.count}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+
+    <h2>Priority Locations</h2>
+    <div class="priority-locations">
+      <table>
+          <tr>
+              <th>Name</th>
+              <th>Address</th>
+          </tr>
+          {% for pl in obj.priority_locations.all %}
+          <tr>
+              <td>{{pl.name}}</td>
+              <td>{{pl.address.barangay}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+    {% load static %}
+<!--          <iframe src="maps/{% static "" %}maps/maps/{{obj.filename}}" style="width: 90%; height: 50em; display: block; margin-left: auto;margin-right: auto;" title="Google Maps"></iframe> -->
+  </body>
+</html>

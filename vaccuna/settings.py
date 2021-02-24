@@ -16,7 +16,11 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'maps')
+MEDIA_URL = '/maps/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -29,6 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#Google Maps Key
+GOOGLE_MAPS_API_KEY = 'AIzaSyAZd41RTjPJJQpMDXnm4mU--gZiHmzmPIM'
 
 # Application definition
 
@@ -39,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'widget_tweaks',
 
     # 3rd party
     'phonenumber_field',
