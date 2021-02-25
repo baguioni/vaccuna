@@ -13,7 +13,6 @@ from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
 from lgu.views import DashboardView
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
->>>>>>> origin/master
 
 urlpatterns = [
     path('', LoginView, name="login"),
