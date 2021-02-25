@@ -9,7 +9,7 @@ from enum import IntEnum
 
 
 class QR(models.Model):
-    name = models.CharField(max_length=250)
+    data = models.CharField(max_length=250)
     qr_code = models.ImageField(upload_to=None)
 
     def __str__(self):

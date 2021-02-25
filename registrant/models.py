@@ -1,7 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
-from core.models import AddressField, User, PriorityGroup
+from core.models import AddressField, User, PriorityGroup, QR
 from lgu.models import LocalGovernmentUnit
 from django.utils.translation import gettext_lazy as _
 from lgu.models import VaccinationSite
@@ -99,8 +99,9 @@ class Individual(models.Model):
     cerebrovascular_disease = models.BooleanField(default=False)
     seizure_disorder = models.BooleanField(default=False)
     blood_disease = models.BooleanField(default=False)
-    priority_group = models.IntegerField(choices=PriorityGroup.choices(), default=PriorityGroup.C)
+    priority_group = models.IntegerField(choices=PriorityGroup.choices(), null=True)
 
+    qrcode = models.OneToOneField(QR, on_delete=models.CASCADE, primary_key=True)
 
     def get_full_name(self):
         full_name = f'{self.first_name} {self.middle_name} {self.last_name}'
