@@ -53,6 +53,7 @@ class sms(models.Model):
         return str(self.name)
 
     def save(self, *args, **kwargs):
+        pass
 
 
 class PriorityGroup(IntEnum):

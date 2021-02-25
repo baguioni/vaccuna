@@ -1,13 +1,14 @@
 from django.contrib import admin
 from django.urls import path
 from vaccuna import settings
-from core.views import LoginView, LogoutRequest
+from core.views import LoginView, LogoutRequest, QRCodeRead, UpdateVaccinationStatus
 from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
                               RegistrantDashboard)
 
 from lgu.views import DashboardView
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('', LoginView, name="login"),
@@ -16,7 +17,9 @@ urlpatterns = [
     path('register-household', HouseholdRegisterView),
     path('register-individual/', IndividualRegisterView),
     path('admin/', admin.site.urls),
-    path('registrant/<int:id>', RegistrantDashboard)
+    path('registrant/<int:id>', RegistrantDashboard),
+    path('api/qrcode/<int:pk>', QRCodeRead),
+    path('vaccination/status/<int:pk>', UpdateVaccinationStatus)
 ]
 
 urlpatterns += staticfiles_urlpatterns()

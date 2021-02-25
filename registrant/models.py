@@ -68,8 +68,8 @@ class Individual(models.Model):
 
     vaccination_status = models.IntegerField(default=0)
     vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.CASCADE, null=True, related_name='individuals')
-    first_vaccination_datetime = models.DateTimeField(null=True)
-    second_vaccination_datetime = models.DateTimeField(null=True)
+    first_vaccination_datetime = models.DateField(null=True)
+    second_vaccination_datetime = models.DateField(null=True)
 
     # Employment status
     is_frontline_worker = models.BooleanField(default=False)

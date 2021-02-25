@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     # 3rd party
     'phonenumber_field',
+    'rest_framework',
 
     # vaccuna apps
     'registrant',
