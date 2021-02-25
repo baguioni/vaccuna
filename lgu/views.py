@@ -3,6 +3,7 @@ from lgu.models import LocalGovernmentUnit, VaccinationSite, PriorityLocation
 from lgu.tasks import generate_registrant_markers_map
 from lgu.forms import VaccinationSiteForm, PriorityLocationForm
 from registrant.forms import AddressFieldForm
+from django.shortcuts import redirect
 
 def DashboardView(request, lgu_id):
     obj = LocalGovernmentUnit.objects.get(pk=lgu_id)
@@ -19,32 +20,117 @@ def DashboardView(request, lgu_id):
 def VaccinationSiteCreate(request, lgu_id):
     site_form = VaccinationSiteForm(request.POST or None)
     address_form = AddressFieldForm(request.POST or None)
+    lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
 
     if request.method == 'POST':
-        if site_form.valid() and address_form.valid():
-            address_form.save()
-            lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
-            site = site_form.save(lgu=lgu)
+        if site_form.is_valid() and address_form.is_valid():
+            address = address_form.save()
+            site = site_form.save(commit=False)
+            site.address = address
+            site.lgu = lgu
+            site.save()
+            return redirect(f'/lgu/{lgu.pk}')
 
     context = {
         'site_form': site_form,
         'address_form': address_form,
+        'lgu': lgu,
     }
-    return render(request, "lguDashboard.html", context)
+    return render(request, "vaccinationSite.html", context)
+
+def VaccinationSiteUpdate(request, lgu_id, vs_id):
+    vs = VaccinationSite.objects.get(pk=vs_id)
+    address = vs.address
+    site_form = VaccinationSiteForm(request.POST or None, instance=vs)
+    address_form = AddressFieldForm(request.POST or None, instance=address)
+    lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
+
+    if request.method == 'POST':
+        if site_form.is_valid() and address_form.is_valid():
+            address = address_form.save()
+            site = site_form.save(commit=False)
+            site.address = address
+            site.lgu = lgu
+            site.save()
+            return redirect(f'/lgu/{lgu.pk}')
+
+    context = {
+        'site_form': site_form,
+        'address_form': address_form,
+        'lgu': lgu,
+    }
+    return render(request, "vaccinationSite.html", context)
+
+
+def VaccinationSiteDelete(request, lgu_id, vs_id):
+    obj = VaccinationSite.objects.get(id=vs_id)
+    if request.method == 'POST':
+        obj.delete()
+        return redirect(f'/lgu/{lgu_id}')
+    context = {
+        'obj': obj,
+        'lgu_id': lgu_id
+    }
+    return render(request, "deleteLGU.html", context)
+
 
 def PriorityLocationCreate(request, lgu_id):
     priority_form = PriorityLocationForm(request.POST or None)
     address_form = AddressFieldForm(request.POST or None)
+    lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
 
     if request.method == 'POST':
-        if priority_form.valid() and address_form.valid():
-            address_form.save()
-            lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
-            priority = priority_form.save(lgu=lgu)
+
+        if priority_form.is_valid() and address_form.is_valid():
+            ddress = address_form.save()
+            priority = priority_form.save(commit=False)
+            priority.lgu = lgu
+            priority.address = address
+            priority.save()
+            return redirect(f'/lgu/{lgu.pk}')
 
     context = {
         'priority_form': priority_form,
         'address_form': address_form,
+        'lgu': lgu,
     }
 
-    return render(request, "lguDashboard.html", context)
+    return render(request, "priorityLocation.html", context)
+
+
+def PriorityLocationUpdate(request, lgu_id, pl_id):
+    pl = PriorityLocation.objects.get(pk=pl_id)
+    address = pl.address
+    priority_form = PriorityLocationForm(request.POST or None, instance=pl)
+    address_form = AddressFieldForm(request.POST or None, instance=address)
+    lgu = LocalGovernmentUnit.objects.get(pk=lgu_id)
+
+    if request.method == 'POST':
+
+        if priority_form.is_valid() and address_form.is_valid():
+            ddress = address_form.save()
+            priority = priority_form.save(commit=False)
+            priority.lgu = lgu
+            priority.address = address
+            priority.save()
+            return redirect(f'/lgu/{lgu.pk}')
+
+    context = {
+        'priority_form': priority_form,
+        'address_form': address_form,
+        'lgu': lgu,
+    }
+
+    return render(request, "priorityLocation.html", context)
+
+
+def PriorityLocationDelete(request, lgu_id, pl_id):
+    obj = PriorityLocation.objects.get(id=pl_id)
+    if request.method == 'POST':
+        obj.delete()
+        return redirect(f'/lgu/{lgu_id}')
+    context = {
+        'obj': obj,
+        'lgu_id': lgu_id
+    }
+    return render(request, "deleteLGU.html", context)
