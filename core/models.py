@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import qrcode
 from PIL import Image
-import cv2 as cv
 import googlemaps
 from enum import IntEnum
 
@@ -36,14 +35,6 @@ class QR(models.Model):
         # image overlay code end
         # img.save("qr00001.png")
         return img
-
-    def readQR(img):
-        im = cv.imread('sample2.png')
-        det = cv.QRCodeDetector()
-        retval, points, straight_qrcode = det.detectAndDecode(im)
-        # result is stored in retval ,return retval
-        return retval
-# GENEREATE AND READ QR
 
 
 class sms(models.Model):
