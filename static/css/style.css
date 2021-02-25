@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 100%
+}
+
+.body
+{
+    padding: 0;
+    margin 0;
+}
+
+.img-banner {
+  padding: 30px 0px 0px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  height: auto;
+}
+
+.img-info {
+    width: 100%;
+}
+
+.img-info h2{
+    padding: 30px 30px 20px;
+    font-family: arial;
+    font-size: 50px;
+    color: #111;
+    line-height: 44px;
+}
+
+.img-info p {
+    padding: 0px 30px 20px;
+    font-family: arial;
+    font-size: 16px;
+    color: #111;
+    line-height: 24px;
+}
+
+.form-box {
+    margin: 30% auto;
+    width: auto;
+    background: rgba(0,0,0,0);
+    color: #8b8b8b;
+}
+
+.input-box{
+    margin: 0px auto;
+    width: 80%;
+    border-bottom: 1px solid #fff;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.input-box input{
+    text-indent: 30px;
+    height: 50px;
+    width: 100%;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    color: #8b8b8b;
+}
+
+::placeholder{
+    text-indent: 30px;
+    font-color: #c0c1ce;
+}
+
+.eye{
+    position: absolute;
+}
+
+#hide1{
+    display: none;
+}
+
+.login-btn{
+    margin: 40px auto 20px;
+    border-radius: 5px;
+    height: 50px;
+    width: 80%;
+    display: block;
+    outline: none;
+    padding: 10px 0;
+    border: none;
+    cursor: pointer;
+    background: #e89442;
+    font-size: 16px;
+}

@@ -8,8 +8,12 @@ from lgu.views import (DashboardView, PriorityLocationCreate,
                        VaccinationSiteCreate, VaccinationSiteDelete,
                        VaccinationSiteUpdate)
 from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
-                              RegistrantHome)
-from vaccuna import settings
+                              RegistrantDashboard)
+
+from lgu.views import DashboardView
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+>>>>>>> origin/master
 
 urlpatterns = [
     path('', LoginView, name="login"),
@@ -24,6 +28,7 @@ urlpatterns = [
     path('lgu/<int:lgu_id>/priority-location/create', PriorityLocationCreate),
     path('lgu/<int:lgu_id>/priority-location/update/<int:pl_id>', PriorityLocationUpdate),
     path('lgu/<int:lgu_id>/priority-location/delete/<int:pl_id>', PriorityLocationDelete)
+    path('registrant/<int:id>', RegistrantDashboard)
 ]
 
 urlpatterns += staticfiles_urlpatterns()

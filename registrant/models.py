@@ -20,6 +20,12 @@ class Individual(models.Model):
         NO = 'NO', _('No')
         NOT_SURE = 'NS', _('Not sure')
 
+
+    class SexAtBirth(models.TextChoices):
+        MALE = 'MALE', _('Male')
+        FEMALE = 'FEMALE', _('Female')
+
+
     class Status(models.TextChoices):
         GRANTED = 'G', _('Granted')
         DENIED = 'D', _('Denied')
@@ -31,6 +37,12 @@ class Individual(models.Model):
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
     birthday = models.DateField()
+    sex_assigned_at_birth = models.CharField(
+        max_length=6,
+        choices=SexAtBirth.choices,
+        default=None,
+        null=True
+    )
     mobile_number = PhoneNumberField()
     registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE, related_name='individuals')
     lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.CASCADE, null=True)
