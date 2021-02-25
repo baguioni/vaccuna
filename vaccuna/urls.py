@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
 from django.urls import path
 
-from core.views import LoginView, LogoutRequest
+from core.views import RegistrantLoginView, LogoutRequest, LGULoginView
 from lgu.views import (DashboardView, PriorityLocationCreate,
                        PriorityLocationDelete, PriorityLocationUpdate,
                        VaccinationSiteCreate, VaccinationSiteDelete,
@@ -15,7 +15,8 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('', LoginView, name="login"),
+    path('', RegistrantLoginView, name="login:registrant"),
+    path('lgu/login', LGULoginView, name="login:lgu"),
     path('lgu/<int:lgu_id>', DashboardView, name='dashboard'),
     path('logout', LogoutRequest, name="logout"),
     path('register/household', HouseholdRegisterView),

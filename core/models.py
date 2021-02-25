@@ -29,7 +29,7 @@ class PriorityGroup(IntEnum):
 
 
 class User(AbstractUser):
-    is_admin = models.BooleanField(default=False)
+    is_lgu = models.BooleanField(default=False)
     is_registrant = models.BooleanField(default=False)
 
 
