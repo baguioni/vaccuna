@@ -9,34 +9,48 @@
     <h3>Vaccinated (Complete): {{fully_vaccinated}}</h3>
     <h3>Vaccinated (First Dose): {{first_dose}}</h3>
     <h2>Vaccination Sites</h2>
+    <a href="vaccination-site/create">Create</a>
     <div class="vaccination-sites">
       <table>
           <tr>
               <th>Name</th>
               <th>Daily Capacity</th>
               <th>Registrants</th>
+              <th>Actions</th>
+
           </tr>
           {% for vs in obj.vaccination_sites.all %}
           <tr>
               <td>{{vs.name}}</td>
               <td>{{vs.daily_capacity}}</td>
               <td>{{vs.individuals.all.count}}</td>
+              <td>
+                <a href="/lgu/{{obj.pk}}/vaccination-site/update/{{vs.id}}">Update</a>
+                <a href="/lgu/{{obj.pk}}/vaccination-site/delete/{{vs.id}}">Delete</a>
+              </td>
+
           </tr>
           {% endfor %}
       </table>
     </div>
 
     <h2>Priority Locations</h2>
+    <a href="priority-location/create">Create</a>
     <div class="priority-locations">
       <table>
           <tr>
               <th>Name</th>
               <th>Address</th>
+              <th>Actions</th>
           </tr>
           {% for pl in obj.priority_locations.all %}
           <tr>
               <td>{{pl.name}}</td>
               <td>{{pl.address.barangay}}</td>
+              <td>
+                <a href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
+                <a href="">Delete</a>
+              </td>
           </tr>
           {% endfor %}
       </table>
