@@ -34,6 +34,7 @@ class IndividualRegistrantForm(ModelForm):
           'vaccination_site',
           'priority_group',
           'lgu',
+          'qrcode'
           )
 
         widgets = {
