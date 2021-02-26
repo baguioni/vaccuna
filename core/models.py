@@ -1,40 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-import qrcode
 from PIL import Image
 import googlemaps
 from enum import IntEnum
-
-# GENEREATE AND READ QR
-
-
-class QR(models.Model):
-    data = models.CharField(max_length=250)
-    qr_code = models.ImageField(upload_to=None)
-
-    def __str__(self):
-        return str(self.name)
-
-    def generateQR(self, *args, **kwargs):
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_H,
-            box_size=10,
-            border=4,
-        )
-        qr.add_data(self.name)  # data here
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black",
-                            back_color="white").convert('RGB')
-        # image overlay code start (remove if not needed)
-        logo_display = Image.open('Vaccuna Logo.png')
-        logo_display.thumbnail((150, 150))
-        logo_pos = ((img.size[0] - logo_display.size[0]) // 2,
-                    (img.size[1] - logo_display.size[1]) // 2)
-        img.paste(logo_display, logo_pos)
-        # image overlay code end
-        # img.save("qr00001.png")
-        return img
 
 
 class sms(models.Model):

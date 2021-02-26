@@ -1,10 +1,17 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
-from core.models import AddressField, User, PriorityGroup, QR
+from core.models import AddressField, User, PriorityGroup
 from lgu.models import LocalGovernmentUnit
 from django.utils.translation import gettext_lazy as _
 from lgu.models import VaccinationSite
+import qrcode
+from vaccuna import settings
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
+
 
 class Registrant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -101,13 +108,47 @@ class Individual(models.Model):
     blood_disease = models.BooleanField(default=False)
     priority_group = models.IntegerField(choices=PriorityGroup.choices(), null=True)
 
-    qrcode = models.OneToOneField(QR, on_delete=models.CASCADE, primary_key=True)
+    qr_code = models.ImageField(upload_to='QRCodes/', null=True, blank=True)
+
 
     def get_full_name(self):
         full_name = f'{self.first_name} {self.middle_name} {self.last_name}'
         return full_name.strip()
 
+
     def get_age(self):
         today = date.today()
         birthday = self.birthday
         return today.year - birthday.year - ((today.month, today.day) < (birthday.month, birthday.day))
+
+
+    def generateQR(self, *args, **kwargs):
+        qr = qrcode.QRCode(
+            version=4,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=40,
+            border=8,
+        )
+        qr.add_data(settings.BASE_URL+'/api/qrcode/'+str(self.id))  # data here
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black",
+                            back_color="white").convert('RGB')
+        # image overlay code start (remove if not needed)
+        logo_display = Image.open('Vaccuna Logo.png')
+        logo_display.thumbnail((150, 150))
+        logo_pos = ((img.size[0] - logo_display.size[0]) // 2,
+                    (img.size[1] - logo_display.size[1]) // 2)
+        img.paste(logo_display, logo_pos)
+        temp = BytesIO()
+        img.save(fp=temp, format='JPEG')
+        image_file = ContentFile(temp.getvalue())
+        file_name = 'QR-'+self.get_full_name()+'.jpeg'
+
+        self.qr_code.save(file_name, InMemoryUploadedFile(
+             image_file,       # file
+             None,               # field_name
+             file_name,           # file name
+             'image/jpeg',       # content_type
+             image_file.tell,  # size
+             None)               # content_type_extra
+        )

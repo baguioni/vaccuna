@@ -22,6 +22,8 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'maps')
 MEDIA_URL = '/maps/'
 
+BASE_URL = 'http://localhost:8000'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
