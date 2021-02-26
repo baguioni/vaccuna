@@ -22,6 +22,17 @@
   height: auto;
 }
 
+.head {
+    text-indent: 30px;
+    height: 50px;
+    width: 100%;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    color: #8b8b8b;
+    }
+
 .img-info {
     width: 100%;
 }
@@ -93,4 +104,12 @@
     cursor: pointer;
     background: #e89442;
     font-size: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .img-banner {
+      display: none;
+    }
+
 }

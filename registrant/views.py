@@ -36,12 +36,12 @@ def HouseholdRegisterView(request):
 
         if formset.is_valid() and address_form.is_valid() and user_form.is_valid():
             address = address_form.save()
-            coordinates = GetCoordinates(address)
-
-            if coordinates:
-                coordinates = coordinates[0]['geometry']['location']
-                address.latitude = coordinates['lat']
-                address.longitude = coordinates['lng']
+            # coordinates = GetCoordinates(address)
+            #
+            # if coordinates:
+            #     coordinates = coordinates[0]['geometry']['location']
+            #     address.latitude = coordinates['lat']
+            #     address.longitude = coordinates['lng']
             address.save()
 
             user = user_form.save(commit=False)
@@ -83,12 +83,12 @@ def IndividualRegisterView(request):
 
         if address_form.is_valid() and user_form.is_valid():
             address = address_form.save()
-            coordinates = GetCoordinates(address)
+            # coordinates = GetCoordinates(address)
 
-            if coordinates:
-                coordinates = coordinates[0]['geometry']['location']
-                address.latitude = coordinates['lat']
-                address.longitude = coordinates['lng']
+            # if coordinates:
+            #     coordinates = coordinates[0]['geometry']['location']
+            #     address.latitude = coordinates['lat']
+            #     address.longitude = coordinates['lng']
             address.save()
 
             user = user_form.save(commit=False)
