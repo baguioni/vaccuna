@@ -22,7 +22,6 @@ class AddressFieldForm(ModelForm):
         }
 
 
-
 class IndividualRegistrantForm(ModelForm):
     class Meta:
         model = Individual
