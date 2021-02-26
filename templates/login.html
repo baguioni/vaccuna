@@ -16,36 +16,36 @@
         </style>
     </head>
     <body>
-        <img class="img-banner" src="{% static 'img/banner.png' %}" alt="vaccuna banner">
-        <div class="wrapper">
-            <article class="img-info">
-                <p style="text-align:center; padding-top: 30%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
-                    <span style="color: #e89442"> 565,543</span> Filipinos Vaccinated
-                </p>
-            </article>
+            <img class="img-banner" src="{% static 'img/banner.png' %}" alt="vaccuna banner">
+            <div class="wrapper">
+                <article class="img-info">
+                    <p style="text-align:center; padding-top: 30%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
+                        <span style="color: #e89442"> 565,543</span> Filipinos Vaccinated
+                    </p>
+                </article>
+            </div>
+            <div class="form-box">
+                <form method="POST">
+                    {% csrf_token %}
+
+                      <div class="input-box">
+
+                        <input type="text" class="form-control" name="username" placeholder="Email or Vaccuna ID.">
+
+                      </div>
+
+                      <div class="input-box">
+
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+
+                      </div>
+
+                        <button type="submit" class="login-btn " style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
+                </form>
+                    <p style="text-align:center; padding-top: 10%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
+                        New User? Sign up as <a  style="color: #e89442" href="/register-individual" target="blank"><strong>Individual</strong></a> or <a style="color: #e89442" href="/register-household" target="blank"><strong>Household</strong></a>
+                    </p>
         </div>
-        <div class="form-box">
-            <form method="POST">
-                {% csrf_token %}
-
-                  <div class="input-box">
-
-                    <input type="text" class="form-control" name="username" placeholder="Email or Vaccuna ID.">
-
-                  </div>
-
-                  <div class="input-box">
-
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-
-                  </div>
-
-                    <button type="submit" class="login-btn " style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
-            </form>
-                <p style="text-align:center; padding-top: 10%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
-                    New User? Sign up as <a  style="color: #e89442" href="/register-individual" target="blank"><strong>Individual</strong></a> or <a style="color: #e89442" href="/register-household" target="blank"><strong>Household</strong></a>
-                </p>
-    </div>
         </div>
     </body>
 </html>
