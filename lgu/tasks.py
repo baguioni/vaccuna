@@ -13,9 +13,10 @@ def generate_registrant_markers_map(lgu):
         obj = AddressField.objects.get(id=address['address'])
         coordinates.append((float(obj.latitude), float(obj.longitude)))
     coordinates_lats, coordinates_long = zip(*coordinates)
-    print(coordinates_lats, coordinates_long)
     gmap = gmplot.GoogleMapPlotter(float(lgu.latitude), float(lgu.longitude), 14, apikey=GOOGLE_MAPS_API_KEY)
     gmap.scatter(coordinates_lats, coordinates_long, color='cornflowerblue')
     # import ipdb; ipdb.set_trace()
     html = ContentFile(gmap.get())
-    lgu.registrant_map.save('Cebu City Map.html', html)
+    lgu.registrant_map.save(f'{lgu.name}Map.html', html)
+
+

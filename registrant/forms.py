@@ -22,19 +22,19 @@ class AddressFieldForm(ModelForm):
         }
 
 
-
 class IndividualRegistrantForm(ModelForm):
     class Meta:
         model = Individual
         exclude = (
-            'registrant',
-            'registration_status',
-            'vaccination_status',
-            'first_vaccination_datetime',
-            'second_vaccination_datetime',
-            'vaccination_site',
-            'priority_group',
-            'lgu'
+          'registrant',
+          'registration_status',
+          'vaccination_status',
+          'first_vaccination_datetime',
+          'second_vaccination_datetime',
+          'vaccination_site',
+          'priority_group',
+          'lgu',
+
           )
 
         widgets = {

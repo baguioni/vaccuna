@@ -1,0 +1,12 @@
+{% extends "lguForms.html" %}
+
+{% block content %}
+    <h1>Add Vaccination Site</h1>
+    <h2>{{lgu.name}}</h2>
+    <form method="POST">
+    {% csrf_token %}
+    {{priority_form.as_p}}
+    {{address_form.as_p}}
+      <input type="submit" value="Save"/>
+    </form>
+{% endblock content %}

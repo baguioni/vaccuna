@@ -29,7 +29,7 @@ class PriorityGroup(IntEnum):
 
 
 class User(AbstractUser):
-    is_admin = models.BooleanField(default=False)
+    is_lgu = models.BooleanField(default=False)
     is_registrant = models.BooleanField(default=False)
 
 
@@ -40,8 +40,8 @@ class AddressField(models.Model):
     barangay = models.CharField(max_length=50)
     line1 = models.CharField('Street Address 1', max_length=50)
     line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='', null=True)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=18, decimal_places=15, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=18, decimal_places=15, null=True, blank=True)
 
 
     def get_formatted_address(self):
