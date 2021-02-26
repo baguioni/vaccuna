@@ -19,6 +19,7 @@
             <p>Registration Status: {{individual.get_registration_status_display}}</p>
             <p>Vaccination Status: {{individual.vaccination_status}}</p>
             <p>Vaccination Date: {{individual.first_vaccination_datetime}}</p>
+            <a href="/registrant/download/{{individual.id}}">QR Code</a>
         </div>
         <hr>
         {% endfor %}

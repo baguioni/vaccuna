@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from core.forms import UserSignupForm
 from registrant.forms import (AddressFieldForm, IndividualFormset,
@@ -17,10 +17,8 @@ import os
 
 def DownloadQRCode(request, id):
     img = Individual.objects.get(pk=id).qr_code
-    wrapper = FileWrapper(open(img.file))
     filename = os.path.basename(img.file.name)
-    response = HttpResponse(wrapper, content_type='image/jpeg')
-    response['Content-Length'] = os.path.getsize(img.file)
+    response = HttpResponse(img.file, content_type='image/jpeg')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
 

@@ -7,7 +7,7 @@ urlpatterns = [
     path('register/household/', HouseholdRegisterView),
     path('register/individual/', IndividualRegisterView),
     path('<int:id>/', RegistrantDashboard),
-    path('download/<int:id>', DownloadQRCode),
+    path('download/<int:id>/', DownloadQRCode),
 ]
 
 
