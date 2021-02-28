@@ -6,7 +6,7 @@ from registrant.forms import (AddressFieldForm, IndividualFormset,
 from registrant.models import Individual, Registrant
 import googlemaps
 from django.conf import settings
-from registrant.tasks import AssignPriorityGroup
+from registrant.tasks import AssignPriorityGroup, AssignVaccinationSite
 from core.tasks import GetCoordinates
 import re
 from lgu.models import LocalGovernmentUnit
@@ -73,6 +73,7 @@ def HouseholdRegisterView(request):
             # Create registrant object
             registrant = Registrant(user=user, address=address, is_household=True, lgu=lgu)
             registrant.save()
+            vaccination_site = AssignVaccinationSite(registrant.id)
 
             for individual_form in formset:
                 if individual_form.is_valid():
@@ -81,6 +82,7 @@ def HouseholdRegisterView(request):
                         individual.registrant = registrant
                         individual.generateQR()
                         individual.lgu = lgu
+                        individual.vaccination_site = vaccination_site
                         individual.save()
                         AssignPriorityGroup(individual)
 
@@ -120,15 +122,17 @@ def IndividualRegisterView(request):
 
             lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
 
-            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
+            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)[0]
             lgu = lgu if lgu else None
             # Create registrant object
             registrant = Registrant(user=user, address=address, lgu=lgu)
             registrant.save()
+            vaccination_site = AssignVaccinationSite(registrant.pk)
 
             # Save link individual to registrant
             individual = individual_form.save(commit=False)
             individual.registrant = registrant
+            individual.vaccination_site = vaccination_site
             individual.generateQR()
             individual.lgu = lgu
             individual.save()
