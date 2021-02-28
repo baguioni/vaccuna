@@ -45,14 +45,14 @@ class User(AbstractUser):
 
 
 class AddressField(models.Model):
-    line1 = models.CharField('Street Address 1', max_length=50)
-    line2 = models.CharField(
-        'Street Address 2', max_length=50, blank=True, default='')
-
     region = models.CharField(max_length=50)
     province = models.CharField(max_length=50)
     city = models.CharField('City / Municipality', max_length=50)
     barangay = models.CharField(max_length=50)
+    line1 = models.CharField('Street Address 1', max_length=50)
+    line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='', null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def get_formatted_address(self):
         parts = [', '.join(filter(bool, [self.line1, self.line2]))]
