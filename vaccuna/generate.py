@@ -33,6 +33,8 @@ class UserFactory(DjangoModelFactory):
 
 def GenerateCebuCity():
     user = UserFactory(
+        username='cebucity',
+        password='cebucity',
         is_registrant=False,
         is_lgu=True,
         first_name='Cebu',
