@@ -1,7 +1,18 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from PIL import Image
 import googlemaps
 from enum import IntEnum
+
+
+class sms(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return str(self.name)
+
+    def save(self, *args, **kwargs):
+        pass
 
 
 class PriorityGroup(IntEnum):
@@ -34,15 +45,14 @@ class User(AbstractUser):
 
 
 class AddressField(models.Model):
+    line1 = models.CharField('Street Address 1', max_length=50)
+    line2 = models.CharField(
+        'Street Address 2', max_length=50, blank=True, default='')
+
     region = models.CharField(max_length=50)
     province = models.CharField(max_length=50)
     city = models.CharField('City / Municipality', max_length=50)
     barangay = models.CharField(max_length=50)
-    line1 = models.CharField('Street Address 1', max_length=50)
-    line2 = models.CharField('Street Address 2', max_length=50, blank=True, default='', null=True)
-    latitude = models.DecimalField(max_digits=18, decimal_places=15, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=18, decimal_places=15, null=True, blank=True)
-
 
     def get_formatted_address(self):
         parts = [', '.join(filter(bool, [self.line1, self.line2]))]

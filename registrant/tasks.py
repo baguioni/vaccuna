@@ -1,5 +1,7 @@
 from registrant.models import Individual
 from core.models import PriorityGroup
+import os
+from django.http import HttpResponse
 
 
 def AssignPriorityGroup(individual):
