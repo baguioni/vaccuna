@@ -1,17 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
-        <title>Vaccuna</title>
+        <title>Vaccuna | Dashboard</title>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
+    <style>
+        body{
+            background-color: #fafcff
+        }
+
+        .styling {
+            text-indent: 30px;
+            font-family: 'Lato', sans-serif;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            line-height: 40px;
+            height: auto;
+            margin: auto;
+            width: 92%;
+            border-radius: 5px;
+            outline: none;
+            background: #f6f7f9;
+        }
+
+    </style>
   <body>
-    <h1>{{obj.name}} Dashboard</h1>
+  <div class="forWeb">
+      <div class="wrapper">
+    <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: 10px; padding-top: 10px">{{obj.name}} Dashboard</h1>
+    <div class="styling">
     <h3>Total Registrants: {{obj.individuals.all.count}}</h3>
-    <h3>Vaccinated (Complete): {{fully_vaccinated}}</h3>
-    <h3>Vaccinated (First Dose): {{first_dose}}</h3>
+        </div>
+    <h3 class="styling" style="margin-top: 10px">Vaccinated (Complete): {{fully_vaccinated}}</h3>
+    <h3 class="styling" style="margin-top: 10px">Vaccinated (First Dose): {{first_dose}}</h3>
+      <div class="styling" style="margin-top: 10px">
     <h2>Vaccination Sites</h2>
     <a href="vaccination-site/create">Create</a>
     <div class="vaccination-sites">
-      <table>
+      <table .table-responsive">
           <tr>
               <th>Name</th>
               <th>Daily Capacity</th>
@@ -33,7 +65,7 @@
           {% endfor %}
       </table>
     </div>
-
+</div>
     <h2>Priority Locations</h2>
     <a href="priority-location/create">Create</a>
     <div class="priority-locations">
@@ -57,5 +89,8 @@
     </div>
     {% load static %}
 <!--          <iframe src="maps/{% static "" %}maps/maps/{{obj.filename}}" style="width: 90%; height: 50em; display: block; margin-left: auto;margin-right: auto;" title="Google Maps"></iframe> -->
+              </div>
+    </div>
+  </div>
   </body>
 </html>

@@ -42,6 +42,7 @@ class Individual(models.Model):
     # Basic Info
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
+
     last_name = models.CharField(max_length=50)
     birthday = models.DateField()
     sex_assigned_at_birth = models.CharField(

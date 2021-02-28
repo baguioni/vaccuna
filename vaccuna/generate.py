@@ -34,7 +34,7 @@ class UserFactory(DjangoModelFactory):
 def GenerateCebuCity():
     user = UserFactory(
         is_registrant=False,
-        is_admin=True,
+        is_lgu=True,
         first_name='Cebu',
         last_name='City',
     )

@@ -31,6 +31,7 @@ def RegistrantDashboard(request, id):
     }
     return render(request, "home.html", context)
 
+
 def HouseholdRegisterView(request):
     if request.method == "GET":
         user_form = UserSignupForm(request.GET or None)
@@ -52,6 +53,7 @@ def HouseholdRegisterView(request):
                 coordinates = coordinates[0]['geometry']['location']
                 address.latitude = coordinates['lat']
                 address.longitude = coordinates['lng']
+
             address.save()
 
             user = user_form.save(commit=False)
@@ -103,6 +105,7 @@ def IndividualRegisterView(request):
                 coordinates = coordinates[0]['geometry']['location']
                 address.latitude = coordinates['lat']
                 address.longitude = coordinates['lng']
+
             address.save()
 
             user = user_form.save(commit=False)

@@ -1,20 +1,56 @@
 {% extends "registrationForm.html" %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 {% block content %}
     {{ formset.management_form }}
 
-    <div id="form_set">
-        {% for form in formset.forms %}
-            {{form.non_field_errors}}
-            {{form.errors}}
-            <table class='no_error'>
-                {{ form }}
-            </table>
-        {% endfor %}
+<style>
+    summary {
+        text-indent: 5px;
+        font-size: 20px;
+        width: 100%;
+        border: 1px solid #b8b8b8;
+        border-radius: 5px;
+        outline: none;
+        background: #fff;
+        color: #000;
+    }
+
+
+</style>
+    {% for form in formset.forms %}
+    {{form.non_field_errors}}
+    {{form.errors}}
+    <div class="householdForm" id="form_set">
+    <details open >
+        <summary>Member 1</summary>
+
+
+                <table class='no_error'>
+                    {{ form }}
+                </table>
+
+    </details>
     </div>
-    <input type="button" value="Add More" id="add_more">
+    {% endfor %}
+    <input type="button" value="Add Member" id="add_more">
     <div id="empty_form" style="display:none">
+    <details open >
+    <summary>Member 1</summary>
         <table class='no_error'>
-            {{ formset.empty_form }}
+                {{ formset.empty_form }}
+
         </table>
-    </div>
+    </details>
+</div>
 {% endblock %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+<script type="text/javascript">
+$('#add_more').click(function() {
+    var form_idx = $('#id_form-TOTAL_FORMS').val();
+    $('#form_set').append($('#empty_form').remove().html().replace(/__prefix__/g, form_idx));
+    $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+});
+</script>
