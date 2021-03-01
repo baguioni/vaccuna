@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Vaccuna</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            body {
+                background-color: #fafcff;
+            }
+        </style>
+    </head>
+    <body>
+        <img class="img-banner" src="{% static 'img/banner.png' %}" alt="vaccuna banner">
+        <div class="wrapper">
+            <article class="img-info">
+                <p style="text-align:center; padding-top: 30%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
+                    <span style="color: #e89442"> Local Government Unit</span> Login
+                </p>
+            </article>
+        </div>
+        <div class="form-box">
+            <form method="POST">
+                {% csrf_token %}
+
+                  <div class="input-box">
+
+                    <input type="text" class="form-control" name="username" placeholder="Vaccuna Username.">
+
+                  </div>
+
+                  <div class="input-box">
+
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+
+                  </div>
+
+                    <button type="submit" class="login-btn " style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
+            </form>
+    </div>
+        </div>
+    </body>
+</html>

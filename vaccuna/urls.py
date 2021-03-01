@@ -1,22 +1,19 @@
 from django.contrib import admin
 from django.urls import path
-from vaccuna import settings
-from core.views import LoginView, LogoutRequest
-from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
-                              RegistrantDashboard)
+from django.conf.urls import include
+from core.views import RegistrantLoginView, LogoutRequest, LGULoginView
 
-from lgu.views import DashboardView
+from vaccuna import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+
 urlpatterns = [
-    path('', LoginView, name="login"),
-    path('lgu-dashboard/<int:lgu_id>', DashboardView, name='dashboard'),
-    path('logout', LogoutRequest, name="logout"),
-    path('register-household', HouseholdRegisterView),
-    path('register-individual/', IndividualRegisterView),
+    path('', RegistrantLoginView, name="login-registrant"),
+    path('logout/', LogoutRequest, name="logout"),
     path('admin/', admin.site.urls),
-    path('registrant/<int:id>', RegistrantDashboard)
+    path('registrant/', include('registrant.urls'), name='registrant'),
+    path('lgu/', include('lgu.urls'), name='lgu'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

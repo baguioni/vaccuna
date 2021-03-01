@@ -1,5 +1,7 @@
 from registrant.models import Individual
 from core.models import PriorityGroup
+import os
+from django.http import HttpResponse
 
 
 def AssignPriorityGroup(individual):
@@ -46,11 +48,6 @@ def AssignPriorityGroup(individual):
 
     if individual.is_teacher_or_social_worker:
         individual.priority_group = PriorityGroup.B1
-        individual.save()
-        return
-
-    if individual.is_government_worker:
-        individual.priority_group = PriorityGroup.B2
         individual.save()
         return
 

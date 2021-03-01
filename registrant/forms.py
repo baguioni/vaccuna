@@ -22,7 +22,6 @@ class AddressFieldForm(ModelForm):
         }
 
 
-
 class IndividualRegistrantForm(ModelForm):
     class Meta:
         model = Individual
@@ -35,6 +34,7 @@ class IndividualRegistrantForm(ModelForm):
           'vaccination_site',
           'priority_group',
           'lgu',
+          'qrcode'
           )
 
         widgets = {
