@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,6 +24,7 @@
                         <p style="text-align:center; padding-top: 30%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
                             <span style="color: #e89442"> 565,543</span> Filipinos Vaccinated
                         </p>
+
                     </article>
                 </div>
                 <div class="form-box">
@@ -46,6 +48,7 @@
 
                         <button type="submit" class="login-btn " style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
                 </form>
+                <p>{{error}}</p>
                     <p style="text-align:center; padding-top: 10%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
                         New User? Sign up as <a  style="color: #e89442" href="/registrant/register/individual/" target="blank"><strong>Individual</strong></a> or <a style="color: #e89442" href="/registrant/register/household/" target="blank"><strong>Household</strong></a>
                     </p>

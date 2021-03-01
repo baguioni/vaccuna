@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +48,7 @@ if {{individual.vaccination_status}} == 'Pending' {
         border-radius: 5px;
         outline: none;
         background: #f6f7f9;">
-            <h3>Address: {{registrant.get_formatted_address}}</h3>
+            <h3>Address: {{registrant.address.get_formatted_address}}</h3>
             <h3>LGU: {{registrant.lgu.name}}</h3>
             <div id="content">
                 {% csrf_token %}

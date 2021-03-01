@@ -14,6 +14,8 @@ from lgu.models import LocalGovernmentUnit
 from django.shortcuts import render
 from wsgiref.util import FileWrapper
 import os
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 def DownloadQRCode(request, id):
     img = Individual.objects.get(pk=id).qr_code
@@ -22,14 +24,18 @@ def DownloadQRCode(request, id):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
 
+
 def RegistrantDashboard(request, id):
     registrant = Registrant.objects.get(pk=id)
+    template = "home.html"
+    if request.user.id != registrant.user.id:
+        template = "allow.html"
     individuals = registrant.individuals.all()
     context = {
         'registrant': registrant,
         'individuals': individuals
     }
-    return render(request, "home.html", context)
+    return render(request, template, context)
 
 
 def HouseholdRegisterView(request):

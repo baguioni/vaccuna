@@ -31,9 +31,17 @@ def RegistrantLoginView(request):
 
                 return redirect(f'/registrant/{user.registrant.pk}')
             else:
-                messages.error(request, "Invalid username or password.")
+                error = "User does not exist."
+                messages.error(request, "User does not exist.")
+                return render(request = request,
+                    template_name = "loginRegistrant.html",
+                    context={"form":form})
         else:
+            error = "Invalid username or password."
             messages.error(request, "Invalid username or password.")
+            return render(request = request,
+                template_name = "loginRegistrant.html",
+                context={"form":form})
     form = AuthenticationForm()
     return render(request = request,
                     template_name = "loginRegistrant.html",
