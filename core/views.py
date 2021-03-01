@@ -8,6 +8,15 @@ from rest_framework.response import Response
 from registrant.models import Individual
 from datetime import date
 from django.http import JsonResponse
+from lgu.models import LocalGovernmentUnit
+
+def LandingPage(request):
+    lgus = LocalGovernmentUnit.objects.all()
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={'lgus': lgus}
+    )
 
 def RegistrantLoginView(request):
     if request.method == 'POST':
@@ -65,7 +74,6 @@ def LogoutRequest(request):
     messages.info(request, "Logged out successfully!")
     return redirect("/")
 
-
 @api_view(['GET'])
 def QRCodeRead(request, pk):
     response = {}
@@ -97,4 +105,11 @@ def UpdateVaccinationStatus(request, pk):
         request=request,
         template_name='vaccinationStatus.html',
         context=context,
+    )
+
+def LandingPage(request):
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={}
     )
