@@ -29,8 +29,8 @@ def RegistrantDashboard(request, id):
     registrant = Registrant.objects.get(pk=id)
     template = "home.html"
     print(request.user.id, registrant.user.id)
-    # if request.user.id != registrant.user.id:
-    #     template = "allow.html"
+    if request.user.id != registrant.user.id:
+        template = "allow.html"
     individuals = registrant.individuals.all()
     context = {
         'registrant': registrant,
@@ -70,7 +70,7 @@ def HouseholdRegisterView(request):
             lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
 
             lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
-            lgu = lgu if lgu else None
+            lgu = lgu[0] if lgu else None
             # Create registrant object
             registrant = Registrant(user=user, address=address, is_household=True, lgu=lgu)
             registrant.save()
@@ -123,8 +123,8 @@ def IndividualRegisterView(request):
 
             lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
 
-            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)[0]
-            lgu = lgu if lgu else None
+            lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
+            lgu = lgu[0] if lgu else None
             # Create registrant object
             registrant = Registrant(user=user, address=address, lgu=lgu)
             registrant.save()

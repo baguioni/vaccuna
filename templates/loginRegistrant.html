@@ -9,7 +9,7 @@
 {% block content %}
     <body>
         <div class="forWeb">
-            {% load static %}
+                {% load static %}
                 <img style="width: 95%" src="{% static 'img/banner.png' %}" alt="vaccuna banner">
                 <div class="wrapper">
                     <article class="img-info">
@@ -19,6 +19,7 @@
 
                     </article>
                 </div>
+                <p style="text-align:center; padding-top: 10%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">{{error}}</p>
                 <div class="form-box">
                     <form method="POST">
                         {% csrf_token %}
@@ -40,7 +41,6 @@
 
                         <button type="submit" class="login-btn " style="text-align:center; font-family: 'Lato', sans-serif; font-weight: 700; color: #fff">Log In</button>
                 </form>
-                <p>{{error}}</p>
                     <p style="text-align:center; padding-top: 10%; font-family: 'Lato', sans-serif; font-weight: 700; color: #8b8b8b">
                         New User? Sign up as <a  style="color: #e89442" href="/registrant/register/individual/" target="blank"><strong>Individual</strong></a> or <a style="color: #e89442" href="/registrant/register/household/" target="blank"><strong>Household</strong></a>
                     </p>
