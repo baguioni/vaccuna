@@ -28,8 +28,9 @@ def DownloadQRCode(request, id):
 def RegistrantDashboard(request, id):
     registrant = Registrant.objects.get(pk=id)
     template = "home.html"
-    if request.user.id != registrant.user.id:
-        template = "allow.html"
+    print(request.user.id, registrant.user.id)
+    # if request.user.id != registrant.user.id:
+    #     template = "allow.html"
     individuals = registrant.individuals.all()
     context = {
         'registrant': registrant,
