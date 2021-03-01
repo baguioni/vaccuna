@@ -1,16 +1,5 @@
-{% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-    <head>
-        <title>Vaccuna | Dashboard</title>
-            <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
+{% extends "base.html" %}
+ {% block other %}
     <style>
         body{
             background-color: #fafcff
@@ -83,7 +72,8 @@
           font-size: 16px;
         }
     </style>
-  <body>
+{% endblock %}
+{% block content %}
   <div class="screen">
       <div class="wrapper">
     <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: auto; margin-right: auto; padding-top: 10px; width: 92%; padding-bottom: 20px">{{obj.name}} Dashboard</h1>
@@ -160,5 +150,4 @@
               </div>
     </div>
   </div>
-  </body>
-</html>
+{% endblock %}

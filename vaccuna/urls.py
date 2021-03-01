@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from core.views import RegistrantLoginView, LogoutRequest, LGULoginView
+from core.views import RegistrantLoginView, LogoutRequest, LGULoginView, LandingPage
 
 from vaccuna import settings
 from django.contrib.staticfiles.urls import static
@@ -9,7 +9,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
-    path('', RegistrantLoginView, name="login-registrant"),
+    path('', LandingPage, name="home"),
+    path('login/', RegistrantLoginView, name="login-registrant"),
     path('logout/', LogoutRequest, name="logout"),
     path('admin/', admin.site.urls),
     path('registrant/', include('registrant.urls'), name='registrant'),

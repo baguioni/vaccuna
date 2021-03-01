@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Vaccuna</title>
-</head>
+{% extends "base.html" %}
 <!-- https://www.darwinbiler.com/jquery-ph-locations/ -->
-<body>
-    {% block content %}
-    {% endblock content %}
+{% block content %}
+    {% block form %}
+    {% endblock %}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
         {% load static %}
         {% load widget_tweaks %}
@@ -58,6 +54,4 @@
         });
 
         </script>
-</body>
-
-</html>
+{% endblock %}

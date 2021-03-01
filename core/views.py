@@ -106,10 +106,3 @@ def UpdateVaccinationStatus(request, pk):
         template_name='vaccinationStatus.html',
         context=context,
     )
-
-def LandingPage(request):
-    return render(
-        request=request,
-        template_name="landingPage.html",
-        context={}
-    )
