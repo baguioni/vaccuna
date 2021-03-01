@@ -51,3 +51,16 @@ def LogoutRequest(request):
     logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect("/")
+
+from lgu.models import LocalGovernmentUnit
+
+
+def LandingPage(request):
+    lgus = LocalGovernmentUnit.objects.values_list('name', flat=True)
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={
+            'lgus': lgus,
+        }
+    )
