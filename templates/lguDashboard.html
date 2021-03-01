@@ -16,8 +16,15 @@
             background-color: #fafcff
         }
 
+        .screen{
+            width: 50%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+        }
+
         .styling {
-            text-indent: 30px;
             font-family: 'Lato', sans-serif;
             padding-top: 10px;
             padding-bottom: 10px;
@@ -30,36 +37,89 @@
             background: #f6f7f9;
         }
 
+        .content-table {
+            border-collapse: collapse;
+            width: 92%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+        }
+
+        .content-table thead tr{
+            background-color: #e89442;
+            color: #fff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even){
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type{
+            border-bottom: 2px solid #e89442
+        }
+
+        .button {
+          background-color: #e89442;
+          border: none;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
     </style>
   <body>
-  <div class="forWeb">
+  <div class="screen">
       <div class="wrapper">
-    <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: 10px; padding-top: 10px">{{obj.name}} Dashboard</h1>
+    <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: auto; margin-right: auto; padding-top: 10px; width: 92%; padding-bottom: 20px">{{obj.name}} Dashboard</h1>
     <div class="styling">
-    <h3>Total Registrants: {{obj.individuals.all.count}}</h3>
-        </div>
-    <h3 class="styling" style="margin-top: 10px">Vaccinated (Complete): {{fully_vaccinated}}</h3>
-    <h3 class="styling" style="margin-top: 10px">Vaccinated (First Dose): {{first_dose}}</h3>
-      <div class="styling" style="margin-top: 10px">
-    <h2>Vaccination Sites</h2>
-    <a href="vaccination-site/create">Create</a>
-    <div class="vaccination-sites">
-      <table .table-responsive">
-          <tr>
-              <th>Name</th>
-              <th>Daily Capacity</th>
-              <th>Registrants</th>
-              <th>Actions</th>
+    <h3 style="margin-left: auto; margin-right: auto; width: 92%">Total Registrants: {{obj.individuals.all.count}}</h3>
+    </div>
+    <div class="styling" style="margin-top: 10px">
+    <h3 style="margin-left: auto; margin-right: auto; width: 92%">Vaccinated (Complete): {{fully_vaccinated}}</h3>
+    </div>
+    <div class="styling" style="margin-top: 10px">
+    <h3 class="styling" style="margin-left: auto; margin-right: auto; width: 92%">Vaccinated (First Dose): {{first_dose}}</h3>
+    </div>
+  <div class="styling" style="margin-top: 10px;">
+    <div style="margin-left: auto; margin-right: auto; width: 92%">
+        <h2 style="float: Left">Vaccination Sites</h2>
+        <a class="button "href="vaccination-site/create" style="float: right">Create</a>
+    </div>
+    <div class="vaccination-sites" style="margin-top: 50px;margin-top: 60px;">
+      <table class="content-table">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Daily Capacity</th>
+                <th>Registrants</th>
+                <th>Actions</th>
+            </tr>
+          </thead>
 
-          </tr>
           {% for vs in obj.vaccination_sites.all %}
           <tr>
               <td>{{vs.name}}</td>
               <td>{{vs.daily_capacity}}</td>
               <td>{{vs.individuals.all.count}}</td>
               <td>
-                <a href="/lgu/{{obj.pk}}/vaccination-site/update/{{vs.id}}">Update</a>
-                <a href="/lgu/{{obj.pk}}/vaccination-site/delete/{{vs.id}}">Delete</a>
+                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/update/{{vs.id}}">Update</a>
+                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/delete/{{vs.id}}">Delete</a>
               </td>
 
           </tr>
@@ -67,27 +127,33 @@
       </table>
     </div>
 </div>
-    <h2>Priority Locations</h2>
-    <a href="priority-location/create">Create</a>
-    <div class="priority-locations">
-      <table>
-          <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Actions</th>
-          </tr>
+  <div class="styling" style="margin-top: 10px;">
+    <div style="margin-left: auto; margin-right: auto; width: 92%">
+        <h2 style="float: left">Priority Locations</h2>
+        <a class="button" style="float: right" href="priority-location/create">Create</a>
+    </div>
+  <div style="margin-top: 50px;margin-top: 60px">
+      <table class="content-table">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
           {% for pl in obj.priority_locations.all %}
           <tr>
               <td>{{pl.name}}</td>
               <td>{{pl.address.barangay}}</td>
               <td>
-                <a href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
-                <a href="">Delete</a>
+                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
+                <a class="button" href="">Delete</a>
               </td>
           </tr>
           {% endfor %}
       </table>
     </div>
+  </div>
     {% load static %}
     {% load widget_tweaks %}
 <!--          <iframe src="maps/{% static "" %}maps/maps/{{obj.filename}}" style="width: 90%; height: 50em; display: block; margin-left: auto;margin-right: auto;" title="Google Maps"></iframe> -->
