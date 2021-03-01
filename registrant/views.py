@@ -32,9 +32,11 @@ def RegistrantDashboard(request, id):
     if request.user.id != registrant.user.id:
         template = "allow.html"
     individuals = registrant.individuals.all()
+    base_url = settings.BASE_URL
     context = {
         'registrant': registrant,
-        'individuals': individuals
+        'individuals': individuals,
+        'base_url': base_url,
     }
     return render(request, template, context)
 

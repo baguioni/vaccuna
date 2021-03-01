@@ -53,6 +53,7 @@
                     <p>Vaccination Status: <span style="color: #e89442; font-weight: 700">{{individual.vaccination_status}}</span></p>
                     <p>Vaccination Site: <span style="color: #e89442; font-weight: 700">{{individual.vaccination_site.name}}</span></p>
                     <p>Vaccination Date: <span style="color: #e89442; font-weight: 700">{{individual.first_vaccination_datetime}}</span></p>
+                    <p><a style="color: #e89442; font-weight: 700" href="{{base_url}}/registrant/download/{{individual.id}}/">QR Code</a></p>
                 </div>
                 <hr>
                 {% endfor %}
