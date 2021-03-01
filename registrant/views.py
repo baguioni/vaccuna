@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from core.forms import UserSignupForm
 from registrant.forms import (AddressFieldForm, IndividualFormset,
@@ -12,7 +12,15 @@ import re
 from lgu.models import LocalGovernmentUnit
 
 from django.shortcuts import render
+from wsgiref.util import FileWrapper
+import os
 
+def DownloadQRCode(request, id):
+    img = Individual.objects.get(pk=id).qr_code
+    filename = os.path.basename(img.file.name)
+    response = HttpResponse(img.file, content_type='image/jpeg')
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response
 
 def RegistrantDashboard(request, id):
     registrant = Registrant.objects.get(pk=id)
@@ -65,6 +73,7 @@ def HouseholdRegisterView(request):
                     try:
                         individual = individual_form.save(commit=False)
                         individual.registrant = registrant
+                        individual.generateQR()
                         individual.lgu = lgu
                         individual.save()
                         AssignPriorityGroup(individual)
@@ -114,6 +123,7 @@ def IndividualRegisterView(request):
             # Save link individual to registrant
             individual = individual_form.save(commit=False)
             individual.registrant = registrant
+            individual.generateQR()
             individual.lgu = lgu
             individual.save()
             AssignPriorityGroup(individual)
