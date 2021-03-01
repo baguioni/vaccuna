@@ -8,6 +8,15 @@ from rest_framework.response import Response
 from registrant.models import Individual
 from datetime import date
 from django.http import JsonResponse
+from lgu.models import LocalGovernmentUnit
+
+def LandingPage(request):
+    lgus = LocalGovernmentUnit.objects.all()
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={'lgus': lgus}
+    )
 
 def RegistrantLoginView(request):
     if request.method == 'POST':
