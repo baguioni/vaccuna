@@ -19,50 +19,45 @@ def LandingPage(request):
     )
 
 def RegistrantLoginView(request):
+    form = AuthenticationForm()
+    context = {
+        'form': form
+    }
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_registrant:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
-
-                return redirect(f'/registrant/{user.registrant.pk}')
-            else:
-                error = "User does not exist."
-                messages.error(request, "User does not exist.")
-                return render(request = request,
-                    template_name = "loginRegistrant.html",
-                    context={"form":form})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_registrant:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
+            return redirect(f'/registrant/{user.registrant.pk}')
         else:
-            error = "Invalid username or password."
-            messages.error(request, "Invalid username or password.")
+            error = "User does not exist."
+            messages.error(request, "User does not exist.")
+            context['error'] = error
             return render(request = request,
                 template_name = "loginRegistrant.html",
-                context={"form":form})
-    form = AuthenticationForm()
+                context=context)
+
     return render(request = request,
                     template_name = "loginRegistrant.html",
-                    context={"form":form})
+                    context=context)
 
 def LGULoginView(request):
+    form = AuthenticationForm()
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_lgu:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user is not None and user.is_lgu:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
 
-                return redirect(f'/lgu/{user.lgu.pk}')
-            else:
-                messages.error(request, "Invalid username or password.")
+            return redirect(f'/lgu/{user.lgu.pk}')
         else:
             messages.error(request, "Invalid username or password.")
+
     form = AuthenticationForm()
     return render(request = request,
                     template_name = "loginLGU.html",
@@ -113,4 +108,3 @@ def UpdateVaccinationStatus(request, pk):
         template_name='vaccinationStatus.html',
         context=context,
     )
-

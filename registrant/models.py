@@ -17,7 +17,7 @@ class Registrant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE, null=True)
     is_household = models.BooleanField(default=False)
-    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='registrants', on_delete=models.CASCADE, null=True)
+    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='registrants', on_delete=models.PROTECT, null=True)
 
 
 class Individual(models.Model):
@@ -53,7 +53,7 @@ class Individual(models.Model):
     )
     mobile_number = PhoneNumberField()
     registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE, related_name='individuals')
-    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.CASCADE, null=True)
+    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.PROTECT, null=True)
 
     # Living Situation
     had_covid = models.CharField(
@@ -75,7 +75,7 @@ class Individual(models.Model):
     )
 
     vaccination_status = models.IntegerField(default=0)
-    vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.CASCADE, null=True, related_name='individuals')
+    vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.PROTECT, null=True, related_name='individuals')
     first_vaccination_datetime = models.DateField(null=True)
     second_vaccination_datetime = models.DateField(null=True)
 

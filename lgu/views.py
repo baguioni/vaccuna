@@ -14,7 +14,7 @@ def DashboardView(request, lgu_id):
     template = "lguDashboard.html"
     # if request.user.id != obj.user.id:
     #     template = "allow.html"
-    # generate_registrant_markers_map(obj)
+    generate_registrant_markers_map(obj)
     context = {
         'obj': obj,
         'fully_vaccinated': fully_vaccinated,

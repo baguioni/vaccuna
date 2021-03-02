@@ -1,7 +1,31 @@
-from registrant.models import Individual
+from registrant.models import Individual, Registrant
 from core.models import PriorityGroup
 import os
 from django.http import HttpResponse
+from math import sqrt
+
+
+def AssignVaccinationSite(registrant_id):
+    registrant = Registrant.objects.get(pk=registrant_id)
+    address = registrant.address
+    lat = address.latitude
+    lon = address.longitude
+
+    # No available LGU
+    vaccination_sites = registrant.lgu.vaccination_sites.all()
+    if not vaccination_sites:
+        return None
+
+    distance = []
+    for vs in vaccination_sites:
+        vs_address = vs.address
+        vs_lat = vs_address.latitude
+        vs_lon = vs_address.longitude
+        # Distance formula
+        distance.append(sqrt((vs_lat - lat)**2 + (vs_lon - lon)**2))
+
+    nearest_vs = vaccination_sites[distance.index(min(distance))]
+    return nearest_vs
 
 
 def AssignPriorityGroup(individual):

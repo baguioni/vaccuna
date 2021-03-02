@@ -1,40 +1,30 @@
-{% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Vaccuna | Dashboard</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<style>
-    body{
-        background-color: #fafcff
-    }
-    hr {
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 15px solid #fafcff;
-        margin: 1em 0;
-        padding: 0;
-    }
-</style>
+{% extends "base.html" %}
+{% block other %}
+    <style>
+        body{
+            background-color: #fafcff
+        }
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 15px solid #fafcff;
+            margin: 1em 0;
+            padding: 0;
+        }
+    </style>
 
-<?php
-$colour = 'green';
-
-if {{individual.vaccination_status}} == 'Pending' {
-    $colour = 'red';
-} else {
+    <?php
     $colour = 'green';
-}
 
-<body>
+    if {{individual.vaccination_status}} == 'Pending' {
+        $colour = 'red';
+    } else {
+        $colour = 'green';
+    }
+{% endblock %}
+
+{% block content %}
     <div class="forWeb">
         <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: 30px; padding-top: 10px">DASHBOARD</h1>
         <div style="text-indent: 30px;
@@ -61,12 +51,13 @@ if {{individual.vaccination_status}} == 'Pending' {
                     <p>Mobile Number: <span style="color: #e89442; font-weight: 700">{{individual.mobile_number}}</span></p>
                     <p>Registration Status: <span style="color: #e89442; font-weight: 700">{{individual.get_registration_status_display}}</span></p>
                     <p>Vaccination Status: <span style="color: #e89442; font-weight: 700">{{individual.vaccination_status}}</span></p>
+                    <p>Vaccination Site: <span style="color: #e89442; font-weight: 700">{{individual.vaccination_site.name}}</span></p>
                     <p>Vaccination Date: <span style="color: #e89442; font-weight: 700">{{individual.first_vaccination_datetime}}</span></p>
+                    <p><a style="color: #e89442; font-weight: 700" href="{{base_url}}/registrant/download/{{individual.id}}/">QR Code</a></p>
                 </div>
                 <hr>
                 {% endfor %}
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

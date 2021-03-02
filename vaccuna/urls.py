@@ -9,7 +9,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
-    path('', LandingPage, name="vacuna"),
+    path('', LandingPage, name="home"),
     path('login/', RegistrantLoginView, name="login-registrant"),
     path('logout/', LogoutRequest, name="logout"),
     path('admin/', admin.site.urls),
