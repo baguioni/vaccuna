@@ -8,6 +8,15 @@ from rest_framework.response import Response
 from registrant.models import Individual
 from datetime import date
 from django.http import JsonResponse
+from lgu.models import LocalGovernmentUnit
+
+def LandingPage(request):
+    lgus = LocalGovernmentUnit.objects.all()
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={'lgus': lgus}
+    )
 
 def RegistrantLoginView(request):
     if request.method == 'POST':
@@ -22,9 +31,17 @@ def RegistrantLoginView(request):
 
                 return redirect(f'/registrant/{user.registrant.pk}')
             else:
-                messages.error(request, "Invalid username or password.")
+                error = "User does not exist."
+                messages.error(request, "User does not exist.")
+                return render(request = request,
+                    template_name = "loginRegistrant.html",
+                    context={"form":form})
         else:
+            error = "Invalid username or password."
             messages.error(request, "Invalid username or password.")
+            return render(request = request,
+                template_name = "loginRegistrant.html",
+                context={"form":form})
     form = AuthenticationForm()
     return render(request = request,
                     template_name = "loginRegistrant.html",

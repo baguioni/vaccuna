@@ -14,9 +14,7 @@ urlpatterns = [
     path('logout/', LogoutRequest, name="logout"),
     path('admin/', admin.site.urls),
     path('registrant/', include('registrant.urls'), name='registrant'),
-
     path('lgu/', include('lgu.urls'), name='lgu'),
-
 ]
 
 urlpatterns += staticfiles_urlpatterns()
