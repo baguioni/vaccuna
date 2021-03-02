@@ -57,6 +57,13 @@ def LogoutRequest(request):
     messages.info(request, "Logged out successfully!")
     return redirect("/")
 
+def LandingPage(request):
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={}
+    )
+
 @api_view(['GET'])
 def QRCodeRead(request, pk):
     response = {}
@@ -90,9 +97,3 @@ def UpdateVaccinationStatus(request, pk):
         context=context,
     )
 
-def LandingPage(request):
-    return render(
-        request=request,
-        template_name="landingPage.html",
-        context={}
-    )

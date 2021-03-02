@@ -48,7 +48,7 @@
         }
 
         .content-table thead tr{
-            background-color: #e89442;
+            background-color: #e8a05a;
             color: #fff;
             text-align: left;
             font-weight: bold;
@@ -56,7 +56,7 @@
 
         .content-table th,
         .content-table td {
-            padding: 12px 15px;
+            padding: 3px 15px;
         }
 
         .content-table tbody tr {
@@ -68,12 +68,25 @@
         }
 
         .content-table tbody tr:last-of-type{
-            border-bottom: 2px solid #e89442
+            border-bottom: 2px solid #e8a05a
         }
 
         .button {
-          background-color: #e89442;
+          background-color: #52bbe8;
           border: none;
+          border-radius: 5px;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+
+        .button1 {
+          background-color: #cacaca;
+          border: none;
+          border-radius: 5px;
           color: white;
           padding: 5px 12px;
           text-align: center;
@@ -118,7 +131,7 @@
               <td>{{vs.individuals.all.count}}</td>
               <td>
                 <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/update/{{vs.id}}">Update</a>
-                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/delete/{{vs.id}}">Delete</a>
+                <a class="button1" href="/lgu/{{obj.pk}}/vaccination-site/delete/{{vs.id}}">Delete</a>
               </td>
 
           </tr>
@@ -145,7 +158,7 @@
               <td>{{pl.name}}</td>
               <td>{{pl.address.barangay}}</td>
               <td>
-                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
+                <a class="button1" href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
                 <a class="button" href="">Delete</a>
               </td>
           </tr>
