@@ -6,14 +6,14 @@ from registrant.forms import AddressFieldForm
 from django.shortcuts import redirect
 
 def DashboardView(request, lgu_id):
-    if not request.user.is_lgu:
-        return render(request, "allow.html", {})
+    # if not request.user.is_lgu:
+    #     return render(request, "allow.html", {})
     obj = LocalGovernmentUnit.objects.get(pk=lgu_id)
     first_dose = obj.individuals.filter(vaccination_status=1).count()
     fully_vaccinated = obj.individuals.filter(vaccination_status=2).count()
     template = "lguDashboard.html"
-    if request.user.id != obj.user.id:
-        template = "allow.html"
+    # if request.user.id != obj.user.id:
+    #     template = "allow.html"
     # generate_registrant_markers_map(obj)
     context = {
         'obj': obj,

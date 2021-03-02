@@ -159,19 +159,18 @@
               <td>{{pl.name}}</td>
               <td>{{pl.address.barangay}}</td>
               <td>
-                <a class="button1" href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
-                <a class="button" href="">Delete</a>
+                <a class="button" href="/lgu/{{obj.pk}}/vaccination-site/update/{{pl.id}}">Update</a>
+                <a class="button1" href="">Delete</a>
               </td>
           </tr>
           {% endfor %}
       </table>
     </div>
   </div>
+</div>
+</div>
     {% load static %}
     {% load widget_tweaks %}
-<!--          <iframe src="maps/{% static "" %}maps/maps/{{obj.filename}}" style="width: 90%; height: 50em; display: block; margin-left: auto;margin-right: auto;" title="Google Maps"></iframe> -->
-              </div>
-    </div>
-  </div>
+          <iframe src="maps/{% static "" %}maps/maps/{{obj.filename}}" style="width: 100%; height: 50em; display: block; margin-left: auto;margin-right: auto;" title="Google Maps"></iframe>
   </body>
 </html>
