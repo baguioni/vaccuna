@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from lgu.models import LocalGovernmentUnit, VaccinationSite, PriorityLocation
+from django.shortcuts import redirect, render
+
+from lgu.forms import PriorityLocationForm, VaccinationSiteForm
+from lgu.models import LocalGovernmentUnit, PriorityLocation, VaccinationSite
 from lgu.tasks import generate_registrant_markers_map
-from lgu.forms import VaccinationSiteForm, PriorityLocationForm
 from registrant.forms import AddressFieldForm
-from django.shortcuts import redirect
+
 
 def DashboardView(request, lgu_id):
     # if not request.user.is_lgu:

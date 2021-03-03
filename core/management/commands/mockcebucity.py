@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
-from vaccuna.generate import GenerateCebuCity, GenerateMockRegistrants, GenerateAppointments
+
+from vaccuna.generate import (GenerateAppointments, GenerateCebuCity,
+                              GenerateMockRegistrants)
 
 
 class Command(BaseCommand):

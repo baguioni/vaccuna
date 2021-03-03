@@ -1,16 +1,17 @@
-from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
-from core.models import AddressField, User, PriorityGroup
-from lgu.models import LocalGovernmentUnit
-from django.utils.translation import gettext_lazy as _
-from lgu.models import VaccinationSite
-import qrcode
-from vaccuna import settings
-from PIL import Image
 from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
+
+import qrcode
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
+from PIL import Image
+
+from core.models import AddressField, PriorityGroup, User
+from lgu.models import LocalGovernmentUnit, VaccinationSite
+from vaccuna import settings
 
 
 class Registrant(models.Model):

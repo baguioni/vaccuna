@@ -1,24 +1,24 @@
-from django.http import HttpResponseRedirect, HttpResponse
+import os
+import re
+from wsgiref.util import FileWrapper
+
+import googlemaps
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
 from core.forms import UserSignupForm
+from core.tasks import GetCoordinates
+from lgu.models import LocalGovernmentUnit
+from lgu.tasks import ScheduleAppointment
 from registrant.forms import (AddressFieldForm, IndividualFormset,
                               IndividualRegistrantForm)
 from registrant.models import Individual, Registrant
-import googlemaps
-from django.conf import settings
 from registrant.tasks import AssignPriorityGroup, DetermineVaccinationSite
-from core.tasks import GetCoordinates
-import re
-from lgu.models import LocalGovernmentUnit
 
-from django.shortcuts import render
-from wsgiref.util import FileWrapper
-import os
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from lgu.tasks import ScheduleAppointment
 
 def DownloadQRCode(request, id):
     img = Individual.objects.get(pk=id).qr_code

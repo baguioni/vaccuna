@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from lgu.models import VaccinationSite, PriorityLocation
+
+from lgu.models import PriorityLocation, VaccinationSite
 
 
 class VaccinationSiteForm(ModelForm):

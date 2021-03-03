@@ -1,7 +1,8 @@
 from django.urls import path
-from registrant.views import (HouseholdRegisterView, IndividualRegisterView,
-                              RegistrantDashboard, DownloadQRCode, CreateUserView)
 
+from registrant.views import (CreateUserView, DownloadQRCode,
+                              HouseholdRegisterView, IndividualRegisterView,
+                              RegistrantDashboard)
 
 urlpatterns = [
     path('account/<str:registrant>/', CreateUserView, name="create-user"),

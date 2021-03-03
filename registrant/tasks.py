@@ -1,8 +1,10 @@
-from registrant.models import Individual, Registrant
-from core.models import PriorityGroup
 import os
-from django.http import HttpResponse
 from math import sqrt
+
+from django.http import HttpResponse
+
+from core.models import PriorityGroup
+from registrant.models import Individual, Registrant
 
 
 def DetermineVaccinationSite(registrant_id):

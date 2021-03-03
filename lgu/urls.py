@@ -1,9 +1,10 @@
 from django.urls import path
+
+from core.views import LGULoginView
 from lgu.views import (DashboardView, PriorityLocationCreate,
                        PriorityLocationDelete, PriorityLocationUpdate,
                        VaccinationSiteCreate, VaccinationSiteDelete,
                        VaccinationSiteUpdate, VaccinationSiteView)
-from core.views import LGULoginView
 
 urlpatterns = [
     path('login/', LGULoginView, name="login-lgu"),

@@ -1,12 +1,14 @@
-import googlemaps
+import datetime
+import math
+
 import gmplot
-from vaccuna.settings import GOOGLE_MAPS_API_KEY
+import googlemaps
 from django.core.files.base import ContentFile
+
 from core.models import AddressField
 from lgu.models import LocalGovernmentUnit
 from vaccuna import settings
-import math
-import datetime
+from vaccuna.settings import GOOGLE_MAPS_API_KEY
 
 
 def get_coordinates(addresses):

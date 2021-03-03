@@ -1,17 +1,17 @@
-import factory
-from factory import fuzzy
 import datetime
 from datetime import date
-from core.models import User, AddressField
-from registrant.models import Registrant, Individual
-from factory.django import DjangoModelFactory
-from random import choice, uniform, randint
-from lgu.models import LocalGovernmentUnit, VaccinationSite, PriorityLocation
-from registrant.tasks import AssignPriorityGroup, DetermineVaccinationSite
+from random import choice, randint, uniform
+
+import factory
 from django.contrib.auth.models import Group, Permission
+from factory import fuzzy
+from factory.django import DjangoModelFactory
+
+from core.models import AddressField, User
+from lgu.models import LocalGovernmentUnit, PriorityLocation, VaccinationSite
 from lgu.tasks import ScheduleAppointment
-
-
+from registrant.models import Individual, Registrant
+from registrant.tasks import AssignPriorityGroup, DetermineVaccinationSite
 
 # Random locations in City
 CENTER_LAT = [10.369880, 10.325517, 10.293783, 10.3905245]

@@ -1,11 +1,11 @@
-from django.contrib import admin
-from django.urls import path
 from django.conf.urls import include
-from core.views import RegistrantLoginView, LogoutRequest, LGULoginView, LandingPage
+from django.contrib import admin
+from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+from django.urls import path
 
+from core.views import (LandingPage, LGULoginView, LogoutRequest,
+                        RegistrantLoginView)
 from vaccuna import settings
-from django.contrib.staticfiles.urls import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', LandingPage, name="home"),

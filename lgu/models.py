@@ -1,6 +1,8 @@
-from django.db import models
-from core.models import AddressField, User
 import os
+
+from django.db import models
+
+from core.models import AddressField, User
 
 
 class LocalGovernmentUnit(models.Model):

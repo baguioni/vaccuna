@@ -4,6 +4,7 @@ from django.forms import ModelForm, SelectDateWidget, modelformset_factory
 from core.models import AddressField, User
 from registrant.models import Individual, Registrant
 
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 
