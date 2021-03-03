@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from math import sqrt
 
 
-def AssignVaccinationSite(registrant_id):
+def DetermineVaccinationSite(registrant_id):
     registrant = Registrant.objects.get(pk=registrant_id)
     address = registrant.address
     lat = address.latitude
@@ -29,9 +29,13 @@ def AssignVaccinationSite(registrant_id):
 
 
 def AssignPriorityGroup(individual):
+    """
+    Crude way of auto priotization. Based on
+    registration information. Could be improved
+    with more comprehensive registration form.
+    """
     comorbidities = (
         'cancer',
-        'chronic_kidney_disease',
         'pregnant',
         'diabetes',
         'respiratory_illness',
@@ -89,3 +93,6 @@ def AssignPriorityGroup(individual):
         individual.priority_group = PriorityGroup.B6
         individual.save()
         return
+
+    individual.priority_group = PriorityGroup.C
+    individual.save()

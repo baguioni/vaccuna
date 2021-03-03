@@ -89,11 +89,10 @@ class Individual(models.Model):
     is_employed = models.BooleanField(default=False)
 
     # co-morbidities
-    # https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html    cancer = models.BooleanField(default=False)
+    # https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html
     # https://www.uppi.upd.edu.ph/sites/default/files/pdf/COVID-19-Research-Brief-01.pdf
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7306563/
     cancer = models.BooleanField(default=False)
-    chronic_kidney_disease = models.BooleanField(default=False)
     pregnant = models.BooleanField(default=False)
     diabetes = models.BooleanField(default=False)
     respiratory_illness = models.BooleanField(default=False)

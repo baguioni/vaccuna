@@ -6,7 +6,7 @@ from registrant.forms import (AddressFieldForm, IndividualFormset,
 from registrant.models import Individual, Registrant
 import googlemaps
 from django.conf import settings
-from registrant.tasks import AssignPriorityGroup, AssignVaccinationSite
+from registrant.tasks import AssignPriorityGroup, DetermineVaccinationSite
 from core.tasks import GetCoordinates
 import re
 from lgu.models import LocalGovernmentUnit
@@ -16,6 +16,9 @@ from wsgiref.util import FileWrapper
 import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from lgu.tasks import ScheduleAppointment
 
 def DownloadQRCode(request, id):
     img = Individual.objects.get(pk=id).qr_code
@@ -40,23 +43,18 @@ def RegistrantDashboard(request, id):
     }
     return render(request, template, context)
 
-
 def HouseholdRegisterView(request):
     if request.method == "GET":
-        user_form = UserSignupForm(request.GET or None)
         address_form = AddressFieldForm(request.GET or None)
         formset = IndividualFormset(queryset=Individual.objects.none())
 
     if request.method == "POST":
-
-        user_form = UserSignupForm(request.POST)
         address_form = AddressFieldForm(request.POST or None)
         formset = IndividualFormset(request.POST)
 
-        if formset.is_valid() and address_form.is_valid() and user_form.is_valid():
+        if formset.is_valid() and address_form.is_valid():
             address = address_form.save()
             coordinates = GetCoordinates(address)
-
 
             if coordinates:
                 coordinates = coordinates[0]['geometry']['location']
@@ -65,18 +63,14 @@ def HouseholdRegisterView(request):
 
             address.save()
 
-            user = user_form.save(commit=False)
-            user.is_registrant = True
-            user.save()
-
             lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
 
             lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
             lgu = lgu[0] if lgu else None
             # Create registrant object
-            registrant = Registrant(user=user, address=address, is_household=True, lgu=lgu)
+            registrant = Registrant(user=request.user, address=address, is_household=True, lgu=lgu)
             registrant.save()
-            vaccination_site = AssignVaccinationSite(registrant.id)
+            vaccination_site = DetermineVaccinationSite(registrant.id)
 
             for individual_form in formset:
                 if individual_form.is_valid():
@@ -92,26 +86,54 @@ def HouseholdRegisterView(request):
                     except:
                         print('database error')
 
+            if vaccination_site:
+                ScheduleAppointment(vaccination_site, vaccination_site.start_date)
+
             return HttpResponseRedirect(f'/registrant/{registrant.pk}')
 
     context = {
-        'user_form': user_form,
         'address_form': address_form,
         'formset': formset,
-
     }
 
     return render(request, 'householdForm.html', context)
 
+
+def CreateUserView(request, registrant):
+    form = UserSignupForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_registrant = True
+            user.save()
+            messages.info(request, "Account has been created. Register as an individual/household.")
+            new_user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            login(request, new_user)
+            if registrant == 'individual':
+                return HttpResponseRedirect('/registrant/register/individual/')
+            else:
+                return HttpResponseRedirect('/registrant/register/household/')
+    context = {
+            'user_form': form,
+    }
+
+    return render(
+        request, 'createUser.html', context
+    )
+
+
 def IndividualRegisterView(request):
     individual_form = IndividualRegistrantForm(request.POST or None)
     address_form = AddressFieldForm(request.POST or None)
-    user_form = UserSignupForm(request.POST or None)
     if request.method == 'POST':
 
-        if individual_form.is_valid() and address_form.is_valid() and user_form.is_valid():
+        if individual_form.is_valid() and address_form.is_valid():
             address = address_form.save()
             coordinates = GetCoordinates(address)
+
             if coordinates:
                 coordinates = coordinates[0]['geometry']['location']
                 address.latitude = coordinates['lat']
@@ -119,18 +141,14 @@ def IndividualRegisterView(request):
 
             address.save()
 
-            user = user_form.save(commit=False)
-            user.is_registrant = True
-            user.save()
-
             lgu_name = re.sub("[\(\[].*?[\)\]]", "", address.city).strip()
 
             lgu = LocalGovernmentUnit.objects.filter(name__contains=lgu_name)
             lgu = lgu[0] if lgu else None
             # Create registrant object
-            registrant = Registrant(user=user, address=address, lgu=lgu)
+            registrant = Registrant(user=request.user, address=address, lgu=lgu)
             registrant.save()
-            vaccination_site = AssignVaccinationSite(registrant.pk)
+            vaccination_site = DetermineVaccinationSite(registrant.pk)
 
             # Save link individual to registrant
             individual = individual_form.save(commit=False)
@@ -141,18 +159,19 @@ def IndividualRegisterView(request):
             individual.save()
             AssignPriorityGroup(individual)
 
+            if vaccination_site:
+                ScheduleAppointment(vaccination_site, vaccination_site.start_date)
+
             return HttpResponseRedirect(f'/registrant/{registrant.pk}')
         else:
             context = {
                 'individual_form': individual_form,
                 'address_form': address_form,
-                'user_form': user_form,
             }
     else:
         context = {
             'individual_form': individual_form,
             'address_form': address_form,
-            'user_form': user_form,
         }
 
     return render(

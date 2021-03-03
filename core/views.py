@@ -10,6 +10,7 @@ from datetime import date
 from django.http import JsonResponse
 from lgu.models import LocalGovernmentUnit
 
+
 def LandingPage(request):
     lgus = LocalGovernmentUnit.objects.all()
     return render(
@@ -17,6 +18,7 @@ def LandingPage(request):
         template_name="landingPage.html",
         context={'lgus': lgus}
     )
+
 
 def RegistrantLoginView(request):
     form = AuthenticationForm()
@@ -49,7 +51,6 @@ def LGULoginView(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        print(user)
         if user is not None and user.is_lgu:
             login(request, user)
             messages.info(request, f"You are now logged in as {username}")
@@ -69,12 +70,6 @@ def LogoutRequest(request):
     messages.info(request, "Logged out successfully!")
     return redirect("/")
 
-def LandingPage(request):
-    return render(
-        request=request,
-        template_name="landingPage.html",
-        context={}
-    )
 
 @api_view(['GET'])
 def QRCodeRead(request, pk):

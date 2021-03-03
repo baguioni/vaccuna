@@ -2,7 +2,7 @@ from django.urls import path
 from lgu.views import (DashboardView, PriorityLocationCreate,
                        PriorityLocationDelete, PriorityLocationUpdate,
                        VaccinationSiteCreate, VaccinationSiteDelete,
-                       VaccinationSiteUpdate)
+                       VaccinationSiteUpdate, VaccinationSiteView)
 from core.views import LGULoginView
 
 urlpatterns = [
@@ -14,7 +14,7 @@ urlpatterns = [
     path('<int:lgu_id>/priority-location/create/', PriorityLocationCreate),
     path('<int:lgu_id>/priority-location/update/<int:pl_id>/', PriorityLocationUpdate),
     path('<int:lgu_id>/priority-location/delete/<int:pl_id>/', PriorityLocationDelete),
-
+    path('<int:lgu_id>/vaccination-site/<int:vs_id>/', VaccinationSiteView),
 ]
 
 

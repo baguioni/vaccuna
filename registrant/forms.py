@@ -23,6 +23,10 @@ class AddressFieldForm(ModelForm):
 
 
 class IndividualRegistrantForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(IndividualRegistrantForm, self).__init__(*args, **kwargs)
+        self.fields['mobile_number'].initial = '+63'
+
     class Meta:
         model = Individual
         exclude = (
@@ -39,6 +43,32 @@ class IndividualRegistrantForm(ModelForm):
 
         widgets = {
             'birthday': DateInput(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'had_covid': 'Did/do you have COVID-19?',
+            'live_with_covid': 'Do you live with someone who had/have COVID-19?',
+            'cancer': 'Do you have Cancer?',
+            'pregnant': 'Are you pregnant or have plans?',
+            'diabetes': 'Do you have Diabetes?',
+            'respiratory_illness': 'Do you have Respiratory Illness?',
+            'cardiovascular_disease': 'Do you have Cardiovascular Disease?',
+            'asthma': 'Do you have Severe Asthma?',
+            'high_blood_pressure': 'Do you have High Blood Pressure?',
+            'organ_transplant': 'Do you have an Organ Transplant?',
+            'kidney_disease': 'Do you have Kidney Disease?',
+            'sickle_cell_disease': 'Do you have Sickle Cell Disease?',
+            'down_syndrome': 'Do you have Down Syndrome?',
+            'cerebrovascular_disease': 'Do you have Cerebrovascular Disease?',
+            'seizure_disorder': 'Do you have Seizure Disorder?',
+            'blood_disease': 'Do you have Blood Disease?',
+            'is_frontline_worker': 'Are you a Frontline Worker in a health facility?',
+            'is_frontline_personnel': 'Are you a Frontline Personnel?',
+            'is_uniformed_personnel':  'Are you a Uniformed Personnel? ',
+            'is_teacher_or_social_worker': 'Are you a Teacher(public or private) or Social Worker?',
+            'is_government_worker': 'Are you a Government Worker?',
+            'is_overseas_filipino_worker':  'Are you an Overseas Filipino Worker?',
+            'is_employed': 'Are you Employed?',
         }
 
 

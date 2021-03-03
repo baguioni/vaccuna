@@ -20,6 +20,7 @@ class VaccinationSite(models.Model):
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
     lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE, related_name='vaccination_sites')
     daily_capacity = models.IntegerField()
+    start_date = models.DateField(null=True)
 
 
 class PriorityLocation(models.Model):

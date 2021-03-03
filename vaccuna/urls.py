@@ -7,7 +7,6 @@ from vaccuna import settings
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
 urlpatterns = [
     path('', LandingPage, name="home"),
     path('login/', RegistrantLoginView, name="login-registrant"),

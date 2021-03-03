@@ -1,13 +1,16 @@
 import factory
 from factory import fuzzy
 import datetime
+from datetime import date
 from core.models import User, AddressField
 from registrant.models import Registrant, Individual
 from factory.django import DjangoModelFactory
 from random import choice, uniform, randint
 from lgu.models import LocalGovernmentUnit, VaccinationSite, PriorityLocation
-from registrant.tasks import AssignPriorityGroup
+from registrant.tasks import AssignPriorityGroup, DetermineVaccinationSite
 from django.contrib.auth.models import Group, Permission
+from lgu.tasks import ScheduleAppointment
+
 
 
 # Random locations in City
@@ -84,7 +87,7 @@ class UserFactory(DjangoModelFactory):
     is_registrant = True
 
 def GenerateCebuCity():
-    user = UserFactory(
+    user = User.objects.create_user(
         username='cebucity',
         is_registrant=False,
         is_lgu=True,
@@ -119,6 +122,7 @@ def GenerateCebuCity():
             address=AddressField.objects.create(latitude=vs[1], longitude=vs[2]),
             daily_capacity=vs[3],
             lgu=cebu_city,
+            start_date=date.today() + datetime.timedelta(days=7),
     )
 
     # Based from
@@ -132,6 +136,7 @@ def GenerateCebuCity():
 
     for pl in priority_locations:
         PriorityLocation.objects.create(
+            name=pl,
             address=AddressField.objects.create(
                 barangay=pl,
                 city='Cebu City',
@@ -187,6 +192,7 @@ def GenerateMockRegistrants(count, lgu):
 
     for i in range(count):
         registrant = RegistrantFactory(lgu=lgu)
+        vaccination_site = DetermineVaccinationSite(registrant.pk)
         for i in range(randint(1,5)):
 
             individual = IndividualFactory.build()
@@ -194,5 +200,15 @@ def GenerateMockRegistrants(count, lgu):
                 setattr(individual, job[randint(0,6)], True)
             individual.registrant = registrant
             individual.lgu = lgu
+            individual.vaccination_site = vaccination_site
             AssignPriorityGroup(individual)
             individual.save()
+
+def GenerateAppointments(lgu):
+    vs = lgu.vaccination_sites.all()
+
+    for v in vs:
+        ScheduleAppointment(v, date.today() + datetime.timedelta(days=7))
+
+
+
