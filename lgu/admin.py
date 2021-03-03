@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from lgu.models import LocalGovernmentUnit, VaccinationSite
 
 

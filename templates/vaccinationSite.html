@@ -1,6 +1,5 @@
 {% extends "lguForms.html" %}
-
-{% block content %}
+{% block form %}
     <h1>Add Vaccination Site</h1>
     <h2>{{lgu.name}}</h2>
     <form method="POST">
@@ -9,4 +8,4 @@
       {{address_form.as_p}}
       <input type="submit" value="Save"/>
     </form>
-{% endblock content %}
+{% endblock %}

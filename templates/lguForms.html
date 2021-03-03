@@ -1,14 +1,126 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Vaccuna</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>Vaccuna | Dashboard</title>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
 <!-- https://www.darwinbiler.com/jquery-ph-locations/ -->
-<body>
-    {% block content %}
-    {% endblock content %}
+    <head>
+        <title>Vaccuna | Dashboard</title>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <style>
+        body{
+            background-color: #fafcff
+        }
+
+        .screen{
+            width: 50%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+        }
+
+        .styling {
+            font-family: 'Lato', sans-serif;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            line-height: 40px;
+            height: auto;
+            margin: auto;
+            width: 100%;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            width: 92%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+        }
+
+        .content-table thead tr{
+            background-color: #e8a05a;
+            color: #fff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 3px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even){
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type{
+            border-bottom: 2px solid #e8a05a
+        }
+
+        .button {
+          background-color: #52bbe8;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+
+        .button1 {
+          background-color: #cacaca;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+
+
+
+    </style>
+    <body>
+    <div class="forWebRegister">
+            <div class="input-box">
+                <div class="styling">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
+            </div>
+
+    </div>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
         {% load static %}
+        {% load widget_tweaks %}
         <script type="text/javascript" src="{% static 'ph-locations.js' %}"></script>
         <script type="text/javascript">
 
@@ -58,5 +170,3 @@
 
         </script>
 </body>
-
-</html>

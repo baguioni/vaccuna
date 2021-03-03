@@ -19,8 +19,8 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'maps')
-MEDIA_URL = '/maps/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+MEDIA_URL = '/media/'
 
 BASE_URL = 'http://localhost:8000'
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 
     'widget_tweaks',
 

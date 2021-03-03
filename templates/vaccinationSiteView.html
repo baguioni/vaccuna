@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+ {% block other %}
+    <style>
+        body{
+            background-color: #fafcff
+        }
+
+        .screen{
+            width: 50%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+        }
+
+        .styling {
+            font-family: 'Lato', sans-serif;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            line-height: 40px;
+            height: auto;
+            margin: auto;
+            width: 92%;
+            border-radius: 5px;
+            outline: none;
+            background: #f6f7f9;
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            width: 92%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+        }
+
+        .content-table thead tr{
+            background-color: #e8a05a;
+            color: #fff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 3px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even){
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type{
+            border-bottom: 2px solid #e8a05a
+        }
+
+        .button {
+          background-color: #52bbe8;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+
+        .button1 {
+          background-color: #cacaca;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          padding: 5px 12px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+  <div class="screen">
+      <div class="wrapper">
+    <h1 style="color: #e89442; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 40px; margin-left: auto; margin-right: auto; padding-top: 10px; width: 92%; padding-bottom: 20px">{{obj.name}} Registrants</h1>
+    <div class="styling">
+    <h3 style="margin-left: auto; margin-right: auto; width: 92%">Total Registrants: {{obj.individuals.all.count}}</h3>
+    <h3 style="margin-left: auto; margin-right: auto; width: 92%">Vaccination Date: {{obj.start_date}}</h3>
+    <h3 style="margin-left: auto; margin-right: auto; width: 92%">Daily Capacity: {{obj.daily_capacity}}</h3>
+    </div>
+    </div>
+
+  <div class="styling" style="margin-top: 10px;">
+    <div class="vaccination-sites" style="margin-top: 50px;margin-top: 60px;">
+      <table class="content-table">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Address</th>
+                <th>Mobile Number</th>
+                <th>Priority Level</th>
+                <th>Vaccination Date</th>
+                <th>Vaccination Status</th>
+            </tr>
+          </thead>
+          {% for individual in individuals %}
+            {% if individual.priority_group %}
+          <tr>
+              <td>{{individual.get_full_name}}</td>
+              <td>{{individual.age}}</td>
+              <td>{{individual.registrant.address.get_formatted_address}}</td>
+              <td>{{individual.mobile_number}}</td>
+              <td>{{individual.priority_group}}</td>
+              <td>{{individual.first_vaccination_datetime}}</td>
+              <td>{{individual.vaccination_status}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+      </table>
+    </div>
+{% endblock %}

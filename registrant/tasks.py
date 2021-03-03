@@ -1,13 +1,43 @@
-from registrant.models import Individual
-from core.models import PriorityGroup
 import os
+from math import sqrt
+
 from django.http import HttpResponse
+
+from core.models import PriorityGroup
+from registrant.models import Individual, Registrant
+
+
+def DetermineVaccinationSite(registrant_id):
+    registrant = Registrant.objects.get(pk=registrant_id)
+    address = registrant.address
+    lat = address.latitude
+    lon = address.longitude
+
+    # No available LGU
+    vaccination_sites = registrant.lgu.vaccination_sites.all()
+    if not vaccination_sites:
+        return None
+
+    distance = []
+    for vs in vaccination_sites:
+        vs_address = vs.address
+        vs_lat = vs_address.latitude
+        vs_lon = vs_address.longitude
+        # Distance formula
+        distance.append(sqrt((vs_lat - lat)**2 + (vs_lon - lon)**2))
+
+    nearest_vs = vaccination_sites[distance.index(min(distance))]
+    return nearest_vs
 
 
 def AssignPriorityGroup(individual):
+    """
+    Crude way of auto priotization. Based on
+    registration information. Could be improved
+    with more comprehensive registration form.
+    """
     comorbidities = (
         'cancer',
-        'chronic_kidney_disease',
         'pregnant',
         'diabetes',
         'respiratory_illness',
@@ -65,3 +95,6 @@ def AssignPriorityGroup(individual):
         individual.priority_group = PriorityGroup.B6
         individual.save()
         return
+
+    individual.priority_group = PriorityGroup.C
+    individual.save()

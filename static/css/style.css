@@ -1,6 +1,23 @@
+
 * {
     margin: 0;
     padding: 0;
+}
+
+.forWeb{
+    width: 600px;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+}
+
+.forWebRegister{
+    width: 800px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
 }
 
 .wrapper {
@@ -18,9 +35,20 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 95%;
+  width: 90%;
   height: auto;
 }
+
+.head {
+    text-indent: 30px;
+    height: 50px;
+    width: 100%;
+    border: 1px solid #b8b8b8;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    color: #8b8b8b;
+    }
 
 .img-info {
     width: 100%;
@@ -43,7 +71,7 @@
 }
 
 .form-box {
-    margin: 30% auto;
+    padding-top: 20%;
     width: auto;
     background: rgba(0,0,0,0);
     color: #8b8b8b;
@@ -57,8 +85,18 @@
     padding-bottom: 5px;
 }
 
+.householdForm {
+    margin: 0px auto;
+    font-size: 10px;
+    line-height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
 .input-box input{
-    text-indent: 30px;
+    text-indent: 20px;
     height: 50px;
     width: 100%;
     border: 1px solid #b8b8b8;
@@ -69,7 +107,7 @@
 }
 
 ::placeholder{
-    text-indent: 30px;
+    text-indent: 20px;
     font-color: #c0c1ce;
 }
 
@@ -93,4 +131,26 @@
     cursor: pointer;
     background: #e89442;
     font-size: 16px;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+    .forWeb{
+        width: 100%;
+        height: 100vh;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fff;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .forWebRegister{
+        width: 100%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fff;
+    }
 }

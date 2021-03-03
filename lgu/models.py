@@ -1,10 +1,12 @@
-from django.db import models
-from core.models import AddressField, User
 import os
+
+from django.db import models
+
+from core.models import AddressField, User
 
 
 class LocalGovernmentUnit(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='lgu')
     name = models.CharField(max_length=50)
     registrant_map = models.FileField(upload_to='maps/', null=True, blank=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
@@ -20,6 +22,7 @@ class VaccinationSite(models.Model):
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE)
     lgu = models.ForeignKey(LocalGovernmentUnit, on_delete=models.CASCADE, related_name='vaccination_sites')
     daily_capacity = models.IntegerField()
+    start_date = models.DateField(null=True)
 
 
 class PriorityLocation(models.Model):

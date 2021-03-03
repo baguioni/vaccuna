@@ -1,23 +1,24 @@
-from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
-from core.models import AddressField, User, PriorityGroup
-from lgu.models import LocalGovernmentUnit
-from django.utils.translation import gettext_lazy as _
-from lgu.models import VaccinationSite
-import qrcode
-from vaccuna import settings
-from PIL import Image
 from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
+
+import qrcode
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
+from PIL import Image
+
+from core.models import AddressField, PriorityGroup, User
+from lgu.models import LocalGovernmentUnit, VaccinationSite
+from vaccuna import settings
 
 
 class Registrant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     address = models.OneToOneField(AddressField, on_delete=models.CASCADE, null=True)
     is_household = models.BooleanField(default=False)
-    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='registrants', on_delete=models.CASCADE, null=True)
+    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='registrants', on_delete=models.PROTECT, null=True)
 
 
 class Individual(models.Model):
@@ -42,6 +43,7 @@ class Individual(models.Model):
     # Basic Info
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
+
     last_name = models.CharField(max_length=50)
     birthday = models.DateField()
     sex_assigned_at_birth = models.CharField(
@@ -52,7 +54,7 @@ class Individual(models.Model):
     )
     mobile_number = PhoneNumberField()
     registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE, related_name='individuals')
-    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.CASCADE, null=True)
+    lgu = models.ForeignKey(LocalGovernmentUnit, related_name='individuals', on_delete=models.PROTECT, null=True)
 
     # Living Situation
     had_covid = models.CharField(
@@ -74,7 +76,7 @@ class Individual(models.Model):
     )
 
     vaccination_status = models.IntegerField(default=0)
-    vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.CASCADE, null=True, related_name='individuals')
+    vaccination_site = models.ForeignKey(VaccinationSite, on_delete=models.PROTECT, null=True, related_name='individuals')
     first_vaccination_datetime = models.DateField(null=True)
     second_vaccination_datetime = models.DateField(null=True)
 
@@ -88,11 +90,10 @@ class Individual(models.Model):
     is_employed = models.BooleanField(default=False)
 
     # co-morbidities
-    # https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html    cancer = models.BooleanField(default=False)
+    # https://www.cdc.gov/coronavirus/2019-ncov/need-extra-precautions/people-with-medical-conditions.html
     # https://www.uppi.upd.edu.ph/sites/default/files/pdf/COVID-19-Research-Brief-01.pdf
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7306563/
     cancer = models.BooleanField(default=False)
-    chronic_kidney_disease = models.BooleanField(default=False)
     pregnant = models.BooleanField(default=False)
     diabetes = models.BooleanField(default=False)
     respiratory_illness = models.BooleanField(default=False)

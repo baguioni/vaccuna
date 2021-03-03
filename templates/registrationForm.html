@@ -1,11 +1,6 @@
-{% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+{% extends "base.html" %}
+{% block head %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<head>
     <title>Vaccuna | Register</title>
     <style>
         body {
@@ -18,24 +13,26 @@
 
 
     </style>
-</head>
+{% endblock %}
 <!-- https://www.darwinbiler.com/jquery-ph-locations/ -->
-<body>
-    <h1 style="text-align: left; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 70px; color: #e89442; text-indent: 50px; padding-top: 50px">Sign Up</h1>
+{% block content %}
+<div class="forWebRegister">
+    <h1 style="text-align: left; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 50px; color: #e89442; text-indent: 50px; padding-top: 50px">Register</h1>
 
     <div class="input-box">
         <form method="POST">
 
                 {% csrf_token %}
-                {{ user_form.as_p}}
                 {{ address_form.as_p }}
-                {% block content %}
+                {% block form %}
                 {% endblock %}
-                <input type="submit" value="Save"/>
+                <input type="submit" value="Register"/>
         </form>
     </div>
+</div>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
         {% load static %}
+        {% load widget_tweaks %}
         <script type="text/javascript" src="{% static 'ph-locations.js' %}"></script>
         <script type="text/javascript">
 
@@ -84,6 +81,4 @@
         });
 
         </script>
-</body>
-
-</html>
+{% endblock %}

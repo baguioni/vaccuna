@@ -1,51 +1,66 @@
+from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from lgu.models import LocalGovernmentUnit
 from registrant.models import Individual
-from datetime import date
-from django.http import JsonResponse
+
+
+def LandingPage(request):
+    lgus = LocalGovernmentUnit.objects.all()
+    return render(
+        request=request,
+        template_name="landingPage.html",
+        context={'lgus': lgus}
+    )
+
 
 def RegistrantLoginView(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_registrant:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
-
-                return redirect(f'/registrant/{user.registrant.pk}')
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_registrant:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
+            return redirect(f'/registrant/{user.registrant.pk}')
+        else:
+            error = "User does not exist."
+            messages.error(request, "User does not exist.")
+            context['error'] = error
+            return render(request = request,
+                template_name = "loginRegistrant.html",
+                context=context)
+
     return render(request = request,
                     template_name = "loginRegistrant.html",
-                    context={"form":form})
+                    context=context)
 
 def LGULoginView(request):
+    form = AuthenticationForm()
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_lgu:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_lgu:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
 
-                return redirect(f'/lgu/{user.lgu.pk}')
-            else:
-                messages.error(request, "Invalid username or password.")
+            return redirect(f'/lgu/{user.lgu.pk}')
         else:
             messages.error(request, "Invalid username or password.")
+
     form = AuthenticationForm()
     return render(request = request,
                     template_name = "loginLGU.html",
