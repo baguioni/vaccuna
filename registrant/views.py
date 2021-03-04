@@ -70,7 +70,7 @@ def HouseholdRegisterView(request):
             # Create registrant object
             registrant = Registrant(user=request.user, address=address, is_household=True, lgu=lgu)
             registrant.save()
-            vaccination_site = DetermineVaccinationSite(registrant.id)
+            vaccination_site = DetermineVaccinationSite(registrant.pk)
 
             for individual_form in formset:
                 if individual_form.is_valid():

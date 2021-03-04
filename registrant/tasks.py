@@ -14,6 +14,9 @@ def DetermineVaccinationSite(registrant_id):
     lon = address.longitude
 
     # No available LGU
+    if not registrant.lgu:
+        return None
+
     vaccination_sites = registrant.lgu.vaccination_sites.all()
     if not vaccination_sites:
         return None

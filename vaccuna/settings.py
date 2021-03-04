@@ -22,7 +22,7 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 MEDIA_URL = '/media/'
 
-BASE_URL = 'http://localhost:8000'
+BASE_URL = 'https://1e1fb6027a43.ngrok.io'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -33,7 +33,7 @@ SECRET_KEY = '8di+q*v5t2%^4n44gm0qe6mj=7v*50c9eoi1srsezha1@lrn*a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['1e1fb6027a43.ngrok.io']
 
 #Google Maps Key
 GOOGLE_MAPS_API_KEY = 'AIzaSyAZd41RTjPJJQpMDXnm4mU--gZiHmzmPIM'
